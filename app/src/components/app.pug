@@ -1,4 +1,15 @@
-.tabs
+.titlebar
+    .title((dblclick)='hostApp.maximizeWindow()') Term
+    button.btn-minimize((click)='hostApp.minimizeWindow()')
+        i.fa.fa-window-minimize
+    button.btn-maximize((click)='hostApp.maximizeWindow()')
+        i.fa.fa-window-maximize
+    button.btn-close((click)='hostApp.quit()')
+        i.fa.fa-close
+
+.tabs(class='active-tab-{{tabs.indexOf(activeTab)}}')
+    button.btn-new-tab((click)='newTab()')
+        i.fa.fa-plus
     .tab(
         *ngFor='let tab of tabs; let idx = index; trackBy: tab?.id',
         (click)='selectTab(tab)',
@@ -11,20 +22,13 @@
             div.index {{idx + 1}}
             div.name {{tab.name || 'Terminal'}}
             button((click)='closeTab(tab)') &times;
-    button.btn-new-tab((click)='newTab()')
-        i.fa.fa-plus
     button.btn-settings((click)='showSettings()')
         i.fa.fa-cog
-    button.btn-minimize((click)='hostApp.minimizeWindow()')
-        i.fa.fa-window-minimize
-    button.btn-maximize((click)='hostApp.maximizeWindow()')
-        i.fa.fa-window-maximize
-    button.btn-close((click)='hostApp.quit()')
-        i.fa.fa-close
 
 .tabs-content
     .tab(*ngFor='let tab of tabs; trackBy: tab?.id', [class.active]='tab == activeTab')
-        terminal([session]='tab.session', '[(title)]'='tab.name')
+        terminal(*ngIf='tab.type == "terminal"', [session]='tab.session', '[(title)]'='tab.name')
+        settings-pane(*ngIf='tab.type == "settings"')
 
 hotkey-hint
 

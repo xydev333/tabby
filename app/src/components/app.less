@@ -13,11 +13,14 @@
     background: @body-bg;
 }
 
+@titlebar-height: 35px;
 @tabs-height: 40px;
 @tab-border-radius: 4px;
 
 .button-states() {
     transition: 0.125s all;
+    border: none;
+    background: transparent;
 
     &:hover:not(.active) {
         background: rgba(255, 255, 255, .033);
@@ -28,37 +31,69 @@
     }
 }
 
+.titlebar {
+    height: @titlebar-height;
+    background: #141c23;
+    flex: none;
+    display: flex;
+    flex-direction: row;
+
+    .title {
+        flex: auto;
+        padding-left: 15px;
+        line-height: @titlebar-height;
+        -webkit-app-region: drag;
+    }
+
+    button {
+        flex: none;
+        line-height: @titlebar-height - 2px;
+        padding: 0 15px;
+        font-size: 8px;
+
+        .button-states();
+        cursor: pointer;
+    }
+
+    .btn-close {
+        font-size: 12px;
+    }
+}
+
 .tabs {
     flex: none;
     height: @tabs-height;
     background: @body-bg;
-
     display: flex;
     flex-direction: row;
 
+    &>button, .tab {
+        line-height: @tabs-height - 2px;
+        cursor: pointer;
+    }
+
     &>button {
-        border: none;
-        flex: none;
-        line-height: @tabs-height;
         padding: 0 15px;
-        font-size: 8px;
-        background: #141c23;
+        flex: none;
+        flex-grow: 0;
+        border-bottom: 2px solid transparent;
+        transition: 0.25s all;
+        font-size: 12px;
 
         .button-states();
-        cursor: pointer;
 
-        &.btn-close {
-            font-size: 12px;
-        }
+        text-transform: uppercase;
+        font-weight: bold;
+        color: #888;
+        background: #141c23;
+    }
 
-        &.btn-new-tab {
-            border-bottom-left-radius: @tab-border-radius;
-            font-size: 14px;
-        }
+    &.active-tab-0 .btn-new-tab {
+        border-bottom-right-radius: @tab-border-radius;
+    }
 
-        &.btn-settings {
-            font-size: 14px;
-        }
+    .tab.active + button {
+        border-bottom-left-radius: @tab-border-radius;
     }
 
     .tab {
@@ -66,16 +101,11 @@
         flex-basis: 0;
         flex-grow: 1000;
 
-        &:active {
-            -webkit-app-region: drag;
-        }
-
-        line-height: @tabs-height - 2px;
-
         display: flex;
         overflow: hidden;
         min-width: 0;
         background: @body-bg;
+        transition: 0.25s all;
 
         .button-states();
 
@@ -85,6 +115,7 @@
             flex: auto;
             min-width: 0;
             background: #141c23;
+            transition: 0.25s all;
 
             div.index {
                 flex: none;
@@ -139,7 +170,7 @@
         //border-bottom: 2px solid transparent;
         transition: 0.25s all;
 
-        &.pre-selected, &:nth-last-child(2) {
+        &.pre-selected, &:nth-last-child(1) {
             .content-wrapper {
                 border-bottom-right-radius: @tab-border-radius;
             }
@@ -157,6 +188,8 @@
             .content-wrapper {
                 //border-bottom: 2px solid #69bbea;
                 background: @body-bg;
+                border-top-left-radius: @tab-border-radius;
+                border-top-right-radius: @tab-border-radius;
             }
         }
     }
@@ -170,7 +203,7 @@
         display: none;
         flex: auto;
         position: relative;
-        padding: 10px 15px;
+        padding: 15px;
 
         &.active {
             display: flex;
