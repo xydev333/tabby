@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { Component, HostBinding } from '@angular/core'
+import { HostAppService, Platform } from '../services/hostApp.service'
 
 @Component({
   selector: 'title-bar',
@@ -6,4 +7,9 @@ import { Component } from '@angular/core'
   styles: [require('./titleBar.component.scss')],
 })
 export class TitleBarComponent {
+    @HostBinding('class.inset-titlebar') insetTitlebar = false
+
+    constructor (public hostApp: HostAppService) {
+        this.insetTitlebar = hostApp.platform == Platform.macOS
+    }
 }

@@ -12,6 +12,12 @@ function normalizePath (path: string): string {
 };
 
 (<any>global).require.main.paths.map(x => nodeModule.globalPaths.push(normalizePath(x)))
+nodeModule.globalPaths.unshift(
+    path.join(
+        path.dirname(require('electron').remote.app.getPath('exe')),
+        'resources/builtin-plugins/node_modules',
+    )
+)
 
 if (process.env.TERMINUS_PLUGINS) {
     process.env.TERMINUS_PLUGINS.split(':').map(x => nodeModule.globalPaths.unshift(normalizePath(x)))
@@ -56,11 +62,10 @@ export async function findPlugins (): Promise<IPluginEntry[]> {
     return foundPlugins
 }
 
-export async function loadPlugins (foundPlugins: IPluginEntry[], progress: ProgressCallback): Promise<any[]> {
+export function loadPlugins (foundPlugins: IPluginEntry[], progress: ProgressCallback): any[] {
     let plugins: any[] = []
     progress(0, 1)
-    let index = 0
-    for (let foundPlugin of foundPlugins) {
+    foundPlugins.forEach((foundPlugin, index) => {
         console.info(`Loading ${foundPlugin.name}: ${(<any>global).require.resolve(foundPlugin.path)}`)
         progress(index, foundPlugins.length)
         try {
@@ -69,9 +74,7 @@ export async function loadPlugins (foundPlugins: IPluginEntry[], progress: Progr
         } catch (error) {
             console.error(`Could not load ${foundPlugin.name}:`, error)
         }
-        await delay(1)
-        index++
-    }
+    })
     progress(1, 1)
     return plugins
 }

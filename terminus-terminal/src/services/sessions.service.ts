@@ -43,13 +43,7 @@ export class Session {
             env: env,
         })
 
-        if (options.recoveredTruePID$) {
-            options.recoveredTruePID$.subscribe(pid => {
-                this.truePID = pid
-            })
-        } else {
-            this.truePID = (<any>this.pty).pid
-        }
+        this.truePID = options.recoveredTruePID || (<any>this.pty).pid
 
         this.open = true
 

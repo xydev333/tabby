@@ -1,7 +1,7 @@
 appearance:
-  dock: off
-  dockScreen: current
+  dock: 'off'
+  dockScreen: 'current'
   dockFill: 50
-  tabsLocation: top
-  theme: Standard
-  frame: thin
+  tabsOnTop: true
+  theme: 'Standard'
+  frame: 'thin'
