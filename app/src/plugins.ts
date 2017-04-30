@@ -12,12 +12,20 @@ function normalizePath (path: string): string {
 };
 
 (<any>global).require.main.paths.map(x => nodeModule.globalPaths.push(normalizePath(x)))
-nodeModule.globalPaths.unshift(
-    path.join(
-        path.dirname(require('electron').remote.app.getPath('exe')),
-        'resources/builtin-plugins/node_modules',
-    )
-)
+
+if (process.env.DEV) {
+    nodeModule.globalPaths.unshift(path.dirname(require('electron').remote.app.getAppPath()))
+}
+
+nodeModule.globalPaths.unshift(path.join(
+    path.dirname(require('electron').remote.app.getPath('exe')),
+    'resources/builtin-plugins/node_modules',
+))
+nodeModule.globalPaths.unshift(path.join(
+    require('electron').remote.app.getPath('appData'),
+    'terminus',
+    'plugins',
+))
 
 if (process.env.TERMINUS_PLUGINS) {
     process.env.TERMINUS_PLUGINS.split(':').map(x => nodeModule.globalPaths.unshift(normalizePath(x)))
@@ -47,6 +55,11 @@ export async function findPlugins (): Promise<IPluginEntry[]> {
             if (!await fs.exists(infoPath)) {
                 continue
             }
+
+            if (foundPlugins.some(x => x.name === pluginName)) {
+                console.info(`Plugin ${pluginName} already exists`)
+            }
+
             try {
                 foundPlugins.push({
                     name: pluginName,
@@ -62,10 +75,11 @@ export async function findPlugins (): Promise<IPluginEntry[]> {
     return foundPlugins
 }
 
-export function loadPlugins (foundPlugins: IPluginEntry[], progress: ProgressCallback): any[] {
+export async function loadPlugins (foundPlugins: IPluginEntry[], progress: ProgressCallback): Promise<any[]> {
     let plugins: any[] = []
     progress(0, 1)
-    foundPlugins.forEach((foundPlugin, index) => {
+    let index = 0
+    for (let foundPlugin of foundPlugins) {
         console.info(`Loading ${foundPlugin.name}: ${(<any>global).require.resolve(foundPlugin.path)}`)
         progress(index, foundPlugins.length)
         try {
@@ -74,7 +88,9 @@ export function loadPlugins (foundPlugins: IPluginEntry[], progress: ProgressCal
         } catch (error) {
             console.error(`Could not load ${foundPlugin.name}:`, error)
         }
-    })
+        await delay(1)
+        index++
+    }
     progress(1, 1)
     return plugins
 }
