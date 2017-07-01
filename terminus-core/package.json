@@ -1,8 +1,7 @@
 {
   "name": "terminus-core",
-  "version": "1.0.0-alpha.14",
+  "version": "0.0.1",
   "description": "Terminus core",
-  "keywords": ["terminus-plugin"],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {

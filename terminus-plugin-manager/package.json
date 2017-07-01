@@ -1,8 +1,7 @@
 {
   "name": "terminus-plugin-manager",
-  "version": "1.0.0-alpha.14",
+  "version": "0.0.1",
   "description": "Terminus' plugin manager",
-  "keywords": ["terminus-plugin"],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
