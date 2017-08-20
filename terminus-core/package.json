@@ -1,6 +1,6 @@
 {
   "name": "terminus-core",
-  "version": "1.0.0-alpha.24",
+  "version": "1.0.0-alpha.16-8-gfc060ac",
   "description": "Terminus core",
   "keywords": [
     "terminus-plugin"
@@ -17,13 +17,14 @@
   "author": "Eugene Pankov",
   "license": "MIT",
   "devDependencies": {
-    "@types/js-yaml": "^3.9.0",
-    "@types/node": "^7.0.37",
+    "@ng-bootstrap/ng-bootstrap": "1.0.0-alpha.22",
+    "@types/js-yaml": "^3.5.29",
+    "@types/node": "^7.0.12",
     "@types/webpack-env": "^1.13.0",
     "bootstrap": "4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "ngx-perfect-scrollbar": "4.0.0",
-    "typescript": "^2.4.1"
+    "typescript": "^2.4.0"
   },
   "peerDependencies": {
     "@angular/animations": "4.0.1",
@@ -36,8 +37,8 @@
     "zone.js": "0.8.4"
   },
   "dependencies": {
-    "deepmerge": "^1.5.0",
-    "js-yaml": "^3.9.0"
+    "deepmerge": "^1.4.4",
+    "js-yaml": "^3.8.4"
   },
   "false": {}
 }

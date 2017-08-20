@@ -20,7 +20,7 @@ if (process.env.DEV) {
     nodeModule.globalPaths.unshift(path.dirname(require('electron').remote.app.getAppPath()))
 }
 
-const builtinPluginsPath = process.env.DEV ? path.dirname(require('electron').remote.app.getAppPath()) : path.join((process as any).resourcesPath, 'builtin-plugins')
+const builtinPluginsPath = path.join((process as any).resourcesPath, 'builtin-plugins')
 
 const userPluginsPath = path.join(
     require('electron').remote.app.getPath('appData'),
@@ -108,9 +108,8 @@ export async function findPlugins (): Promise<IPluginInfo[]> {
             continue
         }
 
-        if (foundPlugins.some(x => x.name === pluginName.substring('terminus-'.length))) {
-            console.info(`Plugin ${pluginName} already exists, overriding`)
-            foundPlugins = foundPlugins.filter(x => x.name !== pluginName.substring('terminus-'.length))
+        if (foundPlugins.some(x => x.name === pluginName)) {
+            console.info(`Plugin ${pluginName} already exists`)
         }
 
         try {

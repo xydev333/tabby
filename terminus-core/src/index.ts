@@ -11,18 +11,17 @@ import { ElectronService } from './services/electron.service'
 import { HostAppService } from './services/hostApp.service'
 import { LogService } from './services/log.service'
 import { HotkeysService, AppHotkeyProvider } from './services/hotkeys.service'
+import { QuitterService } from './services/quitter.service'
 import { DockingService } from './services/docking.service'
 import { TabRecoveryService } from './services/tabRecovery.service'
 import { ThemesService } from './services/themes.service'
 
 import { AppRootComponent } from './components/appRoot.component'
 import { TabBodyComponent } from './components/tabBody.component'
-import { SafeModeModalComponent } from './components/safeModeModal.component'
 import { StartPageComponent } from './components/startPage.component'
 import { TabHeaderComponent } from './components/tabHeader.component'
 import { TitleBarComponent } from './components/titleBar.component'
 import { WindowControlsComponent } from './components/windowControls.component'
-import { RenameTabModalComponent } from './components/renameTabModal.component'
 
 import { HotkeyProvider } from './api/hotkeyProvider'
 import { ConfigProvider } from './api/configProvider'
@@ -43,6 +42,7 @@ const PROVIDERS = [
     LogService,
     TabRecoveryService,
     ThemesService,
+    QuitterService,
     { provide: HotkeyProvider, useClass: AppHotkeyProvider, multi: true },
     { provide: Theme, useClass: StandardTheme, multi: true },
     { provide: ConfigProvider, useClass: CoreConfigProvider, multi: true },
@@ -65,13 +65,7 @@ const PROVIDERS = [
         TabHeaderComponent,
         TitleBarComponent,
         WindowControlsComponent,
-        RenameTabModalComponent,
-        SafeModeModalComponent,
     ],
-    entryComponents: [
-        RenameTabModalComponent,
-        SafeModeModalComponent,
-    ]
 })
 export default class AppModule {
     static forRoot (): ModuleWithProviders {

@@ -82,16 +82,10 @@ export class AppService {
         }
     }
 
-    async closeTab (tab: BaseTabComponent, checkCanClose?: boolean): Promise<void> {
-        if (!this.tabs.includes(tab)) {
-            return
-        }
-        if (checkCanClose && !await tab.canClose()) {
-            return
-        }
-        this.tabs = this.tabs.filter((x) => x !== tab)
+    closeTab (tab: BaseTabComponent) {
         tab.destroy()
         let newIndex = Math.max(0, this.tabs.indexOf(tab) - 1)
+        this.tabs = this.tabs.filter((x) => x !== tab)
         if (tab === this.activeTab) {
             this.selectTab(this.tabs[newIndex])
         }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 
-export function getRootModule (plugins: any[]) {
+export async function getRootModule (plugins: any[]): Promise<any> {
     let imports = [
         BrowserModule,
         ...(plugins.map(x => x.default.forRoot ? x.default.forRoot() : x.default)),

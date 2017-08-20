@@ -1,17 +1,16 @@
 import { Component, Inject, Input, HostListener } from '@angular/core'
 import { trigger, style, animate, transition, state } from '@angular/animations'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 
 import { ElectronService } from '../services/electron.service'
 import { HostAppService, Platform } from '../services/hostApp.service'
 import { HotkeysService } from '../services/hotkeys.service'
 import { Logger, LogService } from '../services/log.service'
+import { QuitterService } from '../services/quitter.service'
 import { ConfigService } from '../services/config.service'
 import { DockingService } from '../services/docking.service'
 import { TabRecoveryService } from '../services/tabRecovery.service'
 import { ThemesService } from '../services/themes.service'
 
-import { SafeModeModalComponent } from './safeModeModal.component'
 import { AppService, IToolbarButton, ToolbarButtonProvider } from '../api'
 
 @Component({
@@ -29,16 +28,9 @@ import { AppService, IToolbarButton, ToolbarButtonProvider } from '../api'
                     'flex-basis': '1px',
                     'width': '1px',
                 }),
-                animate('250ms ease-in-out', style({
-                    'flex-basis': '200px',
-                    'width': '200px',
-                }))
+                animate('250ms ease-in-out')
             ]),
             transition(':leave', [
-                style({
-                    'flex-basis': '200px',
-                    'width': '200px',
-                }),
                 animate('250ms ease-in-out', style({
                     'flex-basis': '1px',
                     'width': '1px',
@@ -64,8 +56,8 @@ export class AppRootComponent {
         public app: AppService,
         @Inject(ToolbarButtonProvider) private toolbarButtonProviders: ToolbarButtonProvider[],
         log: LogService,
-        ngbModal: NgbModal,
         _themes: ThemesService,
+        _quitter: QuitterService,
     ) {
         this.logger = log.create('main')
         this.logger.info('v', electron.app.getVersion())
@@ -82,7 +74,7 @@ export class AppRootComponent {
             }
             if (this.app.activeTab) {
                 if (hotkey === 'close-tab') {
-                    this.app.closeTab(this.app.activeTab, true)
+                    this.app.closeTab(this.app.activeTab)
                 }
                 if (hotkey === 'toggle-last-tab') {
                     this.app.toggleLastTab()
@@ -107,10 +99,6 @@ export class AppRootComponent {
         this.hotkeys.globalHotkey.subscribe(() => {
             this.onGlobalHotkey()
         })
-
-        if (window['safeModeReason']) {
-            ngbModal.open(SafeModeModalComponent)
-        }
     }
 
     onGlobalHotkey () {
@@ -145,16 +133,6 @@ export class AppRootComponent {
         }
     }
 
-    @HostListener('dragover')
-    onDragOver () {
-        return false
-    }
-
-    @HostListener('drop')
-    onDrop () {
-        return false
-    }
-
     private getToolbarButtons (aboveZero: boolean): IToolbarButton[] {
         let buttons: IToolbarButton[] = []
         this.toolbarButtonProviders.forEach((provider) => {
@@ -163,5 +141,15 @@ export class AppRootComponent {
         return buttons
             .filter((button) => (button.weight > 0) === aboveZero)
             .sort((a: IToolbarButton, b: IToolbarButton) => (a.weight || 0) - (b.weight || 0))
+    }
+
+    @HostListener('dragover')
+    onDragOver () {
+        return false
+    }
+
+    @HostListener('drop')
+    onDrop () {
+        return false
     }
 }

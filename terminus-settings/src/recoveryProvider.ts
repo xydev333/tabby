@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core'
-import { TabRecoveryProvider, RecoveredTab } from 'terminus-core'
+import { TabRecoveryProvider, AppService } from 'terminus-core'
 
 import { SettingsTabComponent } from './components/settingsTab.component'
 
 @Injectable()
 export class RecoveryProvider extends TabRecoveryProvider {
-    async recover (recoveryToken: any): Promise<RecoveredTab> {
+    constructor (
+        private app: AppService
+    ) {
+        super()
+    }
+
+    async recover (recoveryToken: any): Promise<void> {
         if (recoveryToken.type === 'app:settings') {
-            return { type: SettingsTabComponent }
+            this.app.openNewTab(SettingsTabComponent)
         }
-        return null
     }
 }
