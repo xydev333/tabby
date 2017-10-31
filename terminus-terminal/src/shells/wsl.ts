@@ -25,10 +25,7 @@ export class WSLShellProvider extends ShellProvider {
         return [{
             id: 'wsl',
             name: 'Bash on Windows',
-            command: wslPath,
-            env: {
-                TERM: 'xterm-color',
-            }
+            command: wslPath
         }]
     }
 }

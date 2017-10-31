@@ -13,7 +13,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             cursor: 'block',
             cursorBlink: true,
             customShell: '',
-            workingDirectory: '',
             colorScheme: {
                 __nonStructural: true,
                 name: 'Material',

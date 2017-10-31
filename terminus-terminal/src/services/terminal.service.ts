@@ -33,12 +33,8 @@ export class TerminalService {
     }
 
     async openTab (shell?: IShell, cwd?: string): Promise<TerminalTabComponent> {
-        if (!cwd) {
-            if (this.app.activeTab instanceof TerminalTabComponent) {
-                cwd = await this.app.activeTab.session.getWorkingDirectory()
-            } else {
-                cwd = this.config.store.terminal.workingDirectory || null
-            }
+        if (!cwd && this.app.activeTab instanceof TerminalTabComponent) {
+            cwd = await this.app.activeTab.session.getWorkingDirectory()
         }
         if (!shell) {
             let shells = await this.shells$.toPromise()
