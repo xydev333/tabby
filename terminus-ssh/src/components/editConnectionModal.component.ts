@@ -20,6 +20,7 @@ export class EditConnectionModalComponent {
             this.hostApp.getWindow(),
             {
                 title: 'Select private key',
+                properties: ['openDirectory']
             }
         )
         if (path) {

@@ -2,8 +2,7 @@ import { Injectable, NgZone } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Client } from 'ssh2'
 import * as fs from 'mz/fs'
-import * as path from 'path'
-import { AppService, HostAppService, Platform } from 'terminus-core'
+import { AppService } from 'terminus-core'
 import { TerminalTabComponent } from 'terminus-terminal'
 import { SSHConnection, SSHSession } from '../api'
 import { PromptModalComponent } from '../components/promptModal.component'
@@ -13,6 +12,7 @@ const { SSH2Stream } = require('ssh2-streams')
 let xkeychain
 let wincredmgr
 try {
+    console.log(1)
     xkeychain = require('xkeychain')
 } catch (error) {
     try {
@@ -28,7 +28,6 @@ export class SSHService {
         private app: AppService,
         private zone: NgZone,
         private ngbModal: NgbModal,
-        private hostApp: HostAppService,
     ) {
     }
 
@@ -80,11 +79,6 @@ export class SSHService {
 
     async connect (connection: SSHConnection): Promise<TerminalTabComponent> {
         let privateKey: string = null
-        let keyPath = path.join(process.env.HOME, '.ssh', 'id_rsa')
-        if (!connection.privateKey && await fs.exists(keyPath)) {
-            connection.privateKey = keyPath
-        }
-
         if (connection.privateKey) {
             try {
                 privateKey = (await fs.readFile(connection.privateKey)).toString()
@@ -97,9 +91,7 @@ export class SSHService {
         await new Promise((resolve, reject) => {
             ssh.on('ready', () => {
                 connected = true
-                if (savedPassword) {
-                    this.savePassword(connection, savedPassword)
-                }
+                this.savePassword(connection, savedPassword)
                 this.zone.run(resolve)
             })
             ssh.on('error', error => {
@@ -123,22 +115,12 @@ export class SSHService {
                 }
                 finish(results)
             }))
-
-            let agent: string = null
-            if (this.hostApp.platform === Platform.Windows) {
-                agent = 'pageant'
-            } else {
-                agent = process.env.SSH_AUTH_SOCK
-            }
-
             ssh.connect({
                 host: connection.host,
                 username: connection.user,
                 password: privateKey ? undefined : '',
                 privateKey,
                 tryKeyboard: true,
-                agent,
-                agentForward: !!agent,
             })
 
             let keychainPasswordUsed = false
