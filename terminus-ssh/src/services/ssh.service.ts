@@ -2,87 +2,60 @@ import { Injectable, NgZone } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Client } from 'ssh2'
 import * as fs from 'mz/fs'
-import { AppService } from 'terminus-core'
+import * as path from 'path'
+import { AppService, HostAppService, Platform, Logger, LogService } from 'terminus-core'
 import { TerminalTabComponent } from 'terminus-terminal'
 import { SSHConnection, SSHSession } from '../api'
 import { PromptModalComponent } from '../components/promptModal.component'
-
+import { PasswordStorageService } from './passwordStorage.service'
 const { SSH2Stream } = require('ssh2-streams')
-
-let xkeychain
-let wincredmgr
-try {
-    console.log(1)
-    xkeychain = require('xkeychain')
-} catch (error) {
-    try {
-        wincredmgr = require('wincredmgr')
-    } catch (error2) {
-        console.warn('No keychain manager available')
-    }
-}
 
 @Injectable()
 export class SSHService {
+    private logger: Logger
+
     constructor (
+        log: LogService,
         private app: AppService,
         private zone: NgZone,
         private ngbModal: NgbModal,
+        private hostApp: HostAppService,
+        private passwordStorage: PasswordStorageService,
     ) {
-    }
-
-    savePassword (connection: SSHConnection, password: string) {
-        if (xkeychain) {
-            xkeychain.setPassword({
-                account: connection.user,
-                service: `ssh@${connection.host}`,
-                password
-            }, () => null)
-        } else {
-            wincredmgr.WriteCredentials(
-                'user',
-                password,
-                `ssh:${connection.user}@${connection.host}`,
-            )
-        }
-    }
-
-    deletePassword (connection: SSHConnection) {
-        if (xkeychain) {
-            xkeychain.deletePassword({
-                account: connection.user,
-                service: `ssh@${connection.host}`,
-            }, () => null)
-        } else {
-            wincredmgr.DeleteCredentials(
-                `ssh:${connection.user}@${connection.host}`,
-            )
-        }
-    }
-
-    loadPassword (connection: SSHConnection): Promise<string> {
-        return new Promise(resolve => {
-            if (xkeychain) {
-                xkeychain.getPassword({
-                    account: connection.user,
-                    service: `ssh@${connection.host}`,
-                }, (_, result) => resolve(result))
-            } else {
-                try {
-                    resolve(wincredmgr.ReadCredentials(`ssh:${connection.user}@${connection.host}`).password)
-                } catch (error) {
-                    resolve(null)
-                }
-            }
-        })
+        this.logger = log.create('ssh')
     }
 
     async connect (connection: SSHConnection): Promise<TerminalTabComponent> {
         let privateKey: string = null
-        if (connection.privateKey) {
+        let privateKeyPassphrase: string = null
+        let privateKeyPath = connection.privateKey
+        if (!privateKeyPath) {
+            let userKeyPath = path.join(process.env.HOME, '.ssh', 'id_rsa')
+            if (await fs.exists(userKeyPath)) {
+                this.logger.info('Using user\'s default private key:', userKeyPath)
+                privateKeyPath = userKeyPath
+            }
+        }
+
+        if (privateKeyPath) {
             try {
-                privateKey = (await fs.readFile(connection.privateKey)).toString()
-            } catch (error) { }
+                privateKey = (await fs.readFile(privateKeyPath)).toString()
+            } catch (error) {
+                // notify: couldn't read key
+            }
+
+            if (privateKey) {
+                this.logger.info('Loaded private key from', privateKeyPath)
+
+                if (privateKey.includes('ENCRYPTED')) {
+                    let modal = this.ngbModal.open(PromptModalComponent)
+                    modal.componentInstance.prompt = 'Private key passphrase'
+                    modal.componentInstance.password = true
+                    try {
+                        privateKeyPassphrase = await modal.result
+                    } catch (_err) { }
+                }
+            }
         }
 
         let ssh = new Client()
@@ -91,11 +64,13 @@ export class SSHService {
         await new Promise((resolve, reject) => {
             ssh.on('ready', () => {
                 connected = true
-                this.savePassword(connection, savedPassword)
+                if (savedPassword) {
+                    this.passwordStorage.savePassword(connection, savedPassword)
+                }
                 this.zone.run(resolve)
             })
             ssh.on('error', error => {
-                this.deletePassword(connection)
+                this.passwordStorage.deletePassword(connection)
                 this.zone.run(() => {
                     if (connected) {
                         alert(`SSH error: ${error}`)
@@ -115,12 +90,23 @@ export class SSHService {
                 }
                 finish(results)
             }))
+
+            let agent: string = null
+            if (this.hostApp.platform === Platform.Windows) {
+                agent = 'pageant'
+            } else {
+                agent = process.env.SSH_AUTH_SOCK
+            }
+
             ssh.connect({
                 host: connection.host,
                 username: connection.user,
                 password: privateKey ? undefined : '',
                 privateKey,
+                passphrase: privateKeyPassphrase,
                 tryKeyboard: true,
+                agent,
+                agentForward: !!agent,
             })
 
             let keychainPasswordUsed = false
@@ -130,8 +116,8 @@ export class SSHService {
                     return connection.password
                 }
 
-                if (!keychainPasswordUsed && (wincredmgr || xkeychain.isSupported())) {
-                    let password = await this.loadPassword(connection)
+                if (!keychainPasswordUsed) {
+                    let password = await this.passwordStorage.loadPassword(connection)
                     if (password) {
                         keychainPasswordUsed = true
                         return password

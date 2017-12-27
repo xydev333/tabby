@@ -10,23 +10,13 @@ export class ColorSchemes extends TerminalColorSchemeProvider {
 
         schemeContents.keys().forEach(schemeFile => {
             let lines = (schemeContents(schemeFile) as string).split('\n')
-
-            // process #define variables
-            let variables: any = {}
-            lines
-                .filter(x => x.startsWith('#define'))
-                .map(x => x.split(' ').map(v => v.trim()))
-                .forEach(([ignore, variableName, variableValue]) => {
-                    variables[variableName] = variableValue
-                })
-
             let values: any = {}
             lines
                 .filter(x => x.startsWith('*.'))
                 .map(x => x.substring(2))
                 .map(x => x.split(':').map(v => v.trim()))
                 .forEach(([key, value]) => {
-                    values[key] = variables[value] ? variables[value] : value
+                    values[key] = value
                 })
 
             let colors: string[] = []
