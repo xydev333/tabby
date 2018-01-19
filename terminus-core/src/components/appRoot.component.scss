@@ -7,6 +7,7 @@
     -webkit-user-select: none;
     -webkit-user-drag: none;
     -webkit-font-smoothing: antialiased;
+    will-change: transform;
     cursor: default;
     animation: 0.5s ease-out fadeIn;
 }
@@ -55,20 +56,15 @@ $tab-border-radius: 4px;
     }
 
     &>.drag-space {
-        min-width: 1px;
-        flex: 1 0 1%;
+        min-width: 100px;
+        flex: 1 0 25%;
         -webkit-app-region: drag;
-
-        &.persistent {
-          min-width: 100px;
-          flex: 1 0 25%;
-        }
     }
 
     &.inset {
         padding-left: 85px;
     }
-
+    
     window-controls {
       margin-left: 10px;
     }
