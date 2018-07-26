@@ -8,7 +8,6 @@ a:hover {
 
 x-screen {
     transition: 0.125s ease background;
-    overflow: visible !important;
 
     &::-webkit-scrollbar {
       width: 3px;
@@ -23,6 +22,10 @@ x-screen {
 x-row > span {
     display: inline-block;
     height: inherit;
+
+    &.wc-node {
+        vertical-align: top;
+    }
 }
 
 @font-face {
