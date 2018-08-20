@@ -4,7 +4,7 @@ const vars = require('./vars')
 
 builder({
   dir: true,
-  linux: ['snap', 'deb', 'rpm', 'tar.gz'],
+  linux: ['deb', 'rpm', 'tar.gz'],
   config: {
     extraMetadata: {
       version: vars.version,

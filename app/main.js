@@ -233,6 +233,8 @@ start = () => {
         minWidth: 400,
         minHeight: 300,
         webPreferences: {webSecurity: false},
+        //- background to avoid the flash of unstyled window
+        backgroundColor: '#131d27',
         frame: false,
         show: false,
     }
@@ -246,8 +248,9 @@ start = () => {
         }
     }
 
-    if (process.platform == 'linux') {
-      options.backgroundColor = '#131d27'
+    if (['darwin', 'win32'].includes(process.platform)) {
+      options.transparent = true
+      delete options.backgroundColor
     }
 
     app.commandLine.appendSwitch('disable-http-cache')
