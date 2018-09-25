@@ -14,7 +14,6 @@ import { LogService } from './services/log.service'
 import { HomeBaseService } from './services/homeBase.service'
 import { HotkeysService, AppHotkeyProvider } from './services/hotkeys.service'
 import { DockingService } from './services/docking.service'
-import { ShellIntegrationService } from './services/shellIntegration.service'
 import { TabRecoveryService } from './services/tabRecovery.service'
 import { ThemesService } from './services/themes.service'
 import { TouchbarService } from './services/touchbar.service'
@@ -52,7 +51,6 @@ const PROVIDERS = [
     HostAppService,
     HotkeysService,
     LogService,
-    ShellIntegrationService,
     TabRecoveryService,
     ThemesService,
     TouchbarService,
