@@ -59,7 +59,6 @@ module.exports = {
     'path',
     'node-pty-tmp',
     'macos-native-processlist',
-    'windows-process-tree',
     'mz/fs',
     'mz/child_process',
     /^rxjs/,

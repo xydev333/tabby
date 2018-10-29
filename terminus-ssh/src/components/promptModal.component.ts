@@ -14,9 +14,7 @@ export class PromptModalComponent {
     ) { }
 
     ngOnInit () {
-        setTimeout(() => {
-            this.input.nativeElement.focus()
-        })
+        this.input.nativeElement.focus()
     }
 
     ok () {

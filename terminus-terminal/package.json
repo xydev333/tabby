@@ -50,8 +50,7 @@
     "runes": "^0.4.2"
   },
   "optionalDependencies": {
-    "macos-native-processlist": "^1.0.0",
-    "windows-process-tree": "^0.2.3"
+    "macos-native-processlist": "^1.0.0"
   },
   "false": {}
 }

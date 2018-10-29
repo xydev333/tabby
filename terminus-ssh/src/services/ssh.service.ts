@@ -49,11 +49,7 @@ export class SSHService {
             if (privateKey) {
                 this.logger.info('Loaded private key from', privateKeyPath)
 
-                let encrypted = privateKey.includes('ENCRYPTED')
-                if (privateKeyPath.toLowerCase().endsWith('.ppk')) {
-                    encrypted = encrypted || privateKey.includes('Encryption:') && !privateKey.includes('Encryption: none')
-                }
-                if (encrypted) {
+                if (privateKey.includes('ENCRYPTED')) {
                     let modal = this.ngbModal.open(PromptModalComponent)
                     modal.componentInstance.prompt = 'Private key passphrase'
                     modal.componentInstance.password = true
