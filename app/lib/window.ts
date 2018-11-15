@@ -14,10 +14,6 @@ if (process.platform === 'win32') {
     DwmEnableBlurBehindWindow = require('windows-blurbehind').DwmEnableBlurBehindWindow
 }
 
-export interface WindowOptions {
-    hidden?: boolean
-}
-
 export class Window {
     ready: Promise<void>
     private visible = new Subject<boolean>()
@@ -27,16 +23,14 @@ export class Window {
 
     get visible$ (): Observable<boolean> { return this.visible }
 
-    constructor (options?: WindowOptions) {
+    constructor () {
         let configData = loadConfig()
-
-        options = options || {}
 
         this.windowConfig = new ElectronConfig({ name: 'window' })
         this.windowBounds = this.windowConfig.get('windowBoundaries')
 
         let maximized = this.windowConfig.get('maximized')
-        let bwOptions: Electron.BrowserWindowConstructorOptions = {
+        let options: Electron.BrowserWindowConstructorOptions = {
             width: 800,
             height: 600,
             title: 'Terminus',
@@ -47,36 +41,33 @@ export class Window {
             show: false,
             backgroundColor: '#00000000'
         }
-        Object.assign(bwOptions, this.windowBounds)
+        Object.assign(options, this.windowBounds)
 
         if ((configData.appearance || {}).frame === 'native') {
-            bwOptions.frame = true
+            options.frame = true
         } else {
             if (process.platform === 'darwin') {
-                bwOptions.titleBarStyle = 'hiddenInset'
+                options.titleBarStyle = 'hiddenInset'
             }
         }
 
         if (process.platform === 'linux') {
-            bwOptions.backgroundColor = '#131d27'
+            options.backgroundColor = '#131d27'
         }
 
-        this.window = new BrowserWindow(bwOptions)
+        this.window = new BrowserWindow(options)
         this.window.once('ready-to-show', () => {
             if (process.platform === 'darwin') {
                 this.window.setVibrancy('dark')
             } else if (process.platform === 'win32' && (configData.appearance || {}).vibrancy) {
                 this.setVibrancy(true)
             }
-
-            if (!options.hidden) {
-                if (maximized) {
-                    this.window.maximize()
-                } else {
-                    this.window.show()
-                }
-                this.window.focus()
+            if (maximized) {
+                this.window.maximize()
+            } else {
+                this.window.show()
             }
+            this.window.focus()
         })
         this.window.loadURL(`file://${app.getAppPath()}/dist/index.html?${this.window.id}`, { extraHeaders: 'pragma: no-cache\n' })
 

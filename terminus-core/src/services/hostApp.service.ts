@@ -85,8 +85,6 @@ export class HostAppService {
                     text = shellEscape([text])
                 }
                 this.cliPaste.next(text)
-            } else {
-                this.secondInstance.next()
             }
         }))
 
