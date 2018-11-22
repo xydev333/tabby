@@ -14,23 +14,30 @@ if (process.platform === 'win32') {
     DwmEnableBlurBehindWindow = require('windows-blurbehind').DwmEnableBlurBehindWindow
 }
 
+export interface WindowOptions {
+    hidden?: boolean
+}
+
 export class Window {
     ready: Promise<void>
     private visible = new Subject<boolean>()
     private window: BrowserWindow
     private windowConfig: ElectronConfig
     private windowBounds: Rectangle
+    private closing = false
 
     get visible$ (): Observable<boolean> { return this.visible }
 
-    constructor () {
+    constructor (options?: WindowOptions) {
         let configData = loadConfig()
+
+        options = options || {}
 
         this.windowConfig = new ElectronConfig({ name: 'window' })
         this.windowBounds = this.windowConfig.get('windowBoundaries')
 
         let maximized = this.windowConfig.get('maximized')
-        let options: Electron.BrowserWindowConstructorOptions = {
+        let bwOptions: Electron.BrowserWindowConstructorOptions = {
             width: 800,
             height: 600,
             title: 'Terminus',
@@ -41,33 +48,36 @@ export class Window {
             show: false,
             backgroundColor: '#00000000'
         }
-        Object.assign(options, this.windowBounds)
+        Object.assign(bwOptions, this.windowBounds)
 
         if ((configData.appearance || {}).frame === 'native') {
-            options.frame = true
+            bwOptions.frame = true
         } else {
             if (process.platform === 'darwin') {
-                options.titleBarStyle = 'hiddenInset'
+                bwOptions.titleBarStyle = 'hiddenInset'
             }
         }
 
         if (process.platform === 'linux') {
-            options.backgroundColor = '#131d27'
+            bwOptions.backgroundColor = '#131d27'
         }
 
-        this.window = new BrowserWindow(options)
+        this.window = new BrowserWindow(bwOptions)
         this.window.once('ready-to-show', () => {
             if (process.platform === 'darwin') {
                 this.window.setVibrancy('dark')
             } else if (process.platform === 'win32' && (configData.appearance || {}).vibrancy) {
                 this.setVibrancy(true)
             }
-            if (maximized) {
-                this.window.maximize()
-            } else {
-                this.window.show()
+
+            if (!options.hidden) {
+                if (maximized) {
+                    this.window.maximize()
+                } else {
+                    this.window.show()
+                }
+                this.window.focus()
             }
-            this.window.focus()
         })
         this.window.loadURL(`file://${app.getAppPath()}/dist/index.html?${this.window.id}`, { extraHeaders: 'pragma: no-cache\n' })
 
@@ -136,7 +146,12 @@ export class Window {
         this.window.on('enter-full-screen', () => this.window.webContents.send('host:window-enter-full-screen'))
         this.window.on('leave-full-screen', () => this.window.webContents.send('host:window-leave-full-screen'))
 
-        this.window.on('close', () => {
+        this.window.on('close', event => {
+            if (!this.closing) {
+                event.preventDefault()
+                this.window.webContents.send('host:window-close-request')
+                return
+            }
             this.windowConfig.set('windowBoundaries', this.windowBounds)
             this.windowConfig.set('maximized', this.window.isMaximized())
         })
@@ -233,6 +248,11 @@ export class Window {
             }
             this.window.show()
             this.window.moveTop()
+        })
+
+        ipcMain.on('window-close', () => {
+            this.closing = true
+            this.window.close()
         })
 
         this.window.webContents.on('new-window', event => event.preventDefault())

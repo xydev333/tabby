@@ -28,6 +28,7 @@ export class HostAppService {
     private cliRunCommand = new Subject<string[]>()
     private cliPaste = new Subject<string>()
     private configChangeBroadcast = new Subject<void>()
+    private windowCloseRequest = new Subject<void>()
     private logger: Logger
     private windowId: number
 
@@ -37,6 +38,7 @@ export class HostAppService {
     get cliRunCommand$ (): Observable<string[]> { return this.cliRunCommand }
     get cliPaste$ (): Observable<string> { return this.cliPaste }
     get configChangeBroadcast$ (): Observable<void> { return this.configChangeBroadcast }
+    get windowCloseRequest$ (): Observable<void> { return this.windowCloseRequest }
 
     constructor (
         private zone: NgZone,
@@ -72,6 +74,10 @@ export class HostAppService {
             this.zone.run(() => this.shown.emit())
         })
 
+        electron.ipcRenderer.on('host:window-close-request', () => {
+            this.zone.run(() => this.windowCloseRequest.next())
+        })
+
         electron.ipcRenderer.on('host:second-instance', (_$event, argv: any, cwd: string) => this.zone.run(() => {
             this.logger.info('Second instance', argv)
             const op = argv._[0]
@@ -85,6 +91,8 @@ export class HostAppService {
                     text = shellEscape([text])
                 }
                 this.cliPaste.next(text)
+            } else {
+                this.secondInstance.next()
             }
         }))
 
@@ -182,6 +190,10 @@ export class HostAppService {
 
     bringToFront () {
         this.electron.ipcRenderer.send('window-bring-to-front')
+    }
+
+    closeWindow () {
+        this.electron.ipcRenderer.send('window-close')
     }
 
     quit () {
