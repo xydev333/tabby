@@ -3,7 +3,6 @@ import { SortableComponent } from 'ng2-dnd'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { BaseTabComponent } from './baseTab.component'
 import { RenameTabModalComponent } from './renameTabModal.component'
-import { HotkeysService } from '../services/hotkeys.service'
 import { ElectronService } from '../services/electron.service'
 import { AppService } from '../services/app.service'
 import { HostAppService, Platform } from '../services/hostApp.service'
@@ -39,17 +38,8 @@ export class TabHeaderComponent {
         private zone: NgZone,
         private hostApp: HostAppService,
         private ngbModal: NgbModal,
-        private hotkeys: HotkeysService,
         private parentDraggable: SortableComponent,
-    ) {
-        this.hotkeys.matchedHotkey.subscribe((hotkey) => {
-            if (this.app.activeTab === this.tab) {
-                if (hotkey === 'rename-tab') {
-                    this.showRenameTabModal()
-                }
-            }
-        })
-    }
+    ) { }
 
     ngOnInit () {
         if (this.hostApp.platform === Platform.macOS) {
@@ -60,21 +50,13 @@ export class TabHeaderComponent {
         })
     }
 
-    showRenameTabModal (): void {
+    @HostListener('dblclick') onDoubleClick (): void {
         let modal = this.ngbModal.open(RenameTabModalComponent)
         modal.componentInstance.value = this.tab.customTitle || this.tab.title
-        setTimeout(() => {
-            const inputElement = modal.componentInstance.input.nativeElement as HTMLInputElement
-            inputElement.select()
-        }, 250)
         modal.result.then(result => {
             this.tab.setTitle(result)
             this.tab.customTitle = result
         }).catch(() => null)
-    }
-
-    @HostListener('dblclick') onDoubleClick (): void {
-        this.showRenameTabModal()
     }
 
     @HostListener('auxclick', ['$event']) async onAuxClick ($event: MouseEvent) {
@@ -114,10 +96,6 @@ export class TabHeaderComponent {
                             this.app.closeTab(tab, true)
                         }
                     })
-                },
-                {
-                    label: 'Rename',
-                    click: () => this.zone.run( () => this.showRenameTabModal() )
                 },
                 {
                     label: 'Color',

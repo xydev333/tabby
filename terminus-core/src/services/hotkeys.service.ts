@@ -216,10 +216,6 @@ export class AppHotkeyProvider extends HotkeyProvider {
             name: 'Toggle fullscreen mode',
         },
         {
-            id: 'rename-tab',
-            name: 'Rename Tab',
-        },
-        {
             id: 'close-tab',
             name: 'Close tab',
         },
