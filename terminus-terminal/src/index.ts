@@ -12,21 +12,20 @@ import { ToolbarButtonProvider, TabRecoveryProvider, ConfigProvider, HotkeysServ
 import { SettingsTabProvider } from 'terminus-settings'
 
 import { AppearanceSettingsTabComponent } from './components/appearanceSettingsTab.component'
-import { TerminalTabComponent } from './components/terminalTab.component'
 import { ShellSettingsTabComponent } from './components/shellSettingsTab.component'
+import { TerminalTabComponent } from './components/terminalTab.component'
 import { TerminalSettingsTabComponent } from './components/terminalSettingsTab.component'
 import { ColorPickerComponent } from './components/colorPicker.component'
-import { EditProfileModalComponent } from './components/editProfileModal.component'
-import { EnvironmentEditorComponent } from './components/environmentEditor.component'
 
 import { SessionsService, BaseSession } from './services/sessions.service'
 import { TerminalFrontendService } from './services/terminalFrontend.service'
 import { TerminalService } from './services/terminal.service'
-import { DockMenuService } from './services/dockMenu.service'
 
+import { ScreenPersistenceProvider } from './persistence/screen'
+import { TMuxPersistenceProvider } from './persistence/tmux'
 import { ButtonProvider } from './buttonProvider'
 import { RecoveryProvider } from './recoveryProvider'
-import { TerminalColorSchemeProvider, TerminalDecorator, ShellProvider } from './api'
+import { SessionPersistenceProvider, TerminalColorSchemeProvider, TerminalDecorator, ShellProvider } from './api'
 import { TerminalSettingsTabProvider, AppearanceSettingsTabProvider, ShellSettingsTabProvider } from './settings'
 import { PathDropDecorator } from './pathDrop'
 import { TerminalConfigProvider } from './config'
@@ -60,7 +59,6 @@ import { hterm } from './hterm'
         SessionsService,
         TerminalFrontendService,
         TerminalService,
-        DockMenuService,
 
         { provide: SettingsTabProvider, useClass: AppearanceSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: ShellSettingsTabProvider, multi: true },
@@ -72,6 +70,9 @@ import { hterm } from './hterm'
         { provide: HotkeyProvider, useClass: TerminalHotkeyProvider, multi: true },
         { provide: TerminalColorSchemeProvider, useClass: HyperColorSchemes, multi: true },
         { provide: TerminalDecorator, useClass: PathDropDecorator, multi: true },
+
+        { provide: SessionPersistenceProvider, useClass: ScreenPersistenceProvider, multi: true },
+        { provide: SessionPersistenceProvider, useClass: TMuxPersistenceProvider, multi: true },
 
         { provide: ShellProvider, useClass: WindowsDefaultShellProvider, multi: true },
         { provide: ShellProvider, useClass: MacOSDefaultShellProvider, multi: true },
@@ -96,7 +97,6 @@ import { hterm } from './hterm'
         AppearanceSettingsTabComponent,
         ShellSettingsTabComponent,
         TerminalSettingsTabComponent,
-        EditProfileModalComponent,
     ],
     declarations: [
         ColorPickerComponent,
@@ -104,12 +104,6 @@ import { hterm } from './hterm'
         AppearanceSettingsTabComponent,
         ShellSettingsTabComponent,
         TerminalSettingsTabComponent,
-        EditProfileModalComponent,
-        EnvironmentEditorComponent,
-    ],
-    exports: [
-        ColorPickerComponent,
-        EnvironmentEditorComponent,
     ],
 })
 export default class TerminalModule {
@@ -119,7 +113,6 @@ export default class TerminalModule {
         hotkeys: HotkeysService,
         terminal: TerminalService,
         hostApp: HostAppService,
-        dockMenu: DockMenuService,
     ) {
         let events = [
             {
@@ -166,7 +159,6 @@ export default class TerminalModule {
                 }
             }
         })
-
         hostApp.cliOpenDirectory$.subscribe(async directory => {
             if (await fs.exists(directory)) {
                 if ((await fs.stat(directory)).isDirectory()) {
@@ -175,7 +167,6 @@ export default class TerminalModule {
                 }
             }
         })
-
         hostApp.cliRunCommand$.subscribe(async command => {
             terminal.openTab({
                 id: '',
@@ -184,25 +175,12 @@ export default class TerminalModule {
             }, null, true)
             hostApp.bringToFront()
         })
-
         hostApp.cliPaste$.subscribe(text => {
             if (app.activeTab instanceof TerminalTabComponent && app.activeTab.session) {
                 (app.activeTab as TerminalTabComponent).sendInput(text)
                 hostApp.bringToFront()
             }
         })
-
-        hostApp.cliOpenProfile$.subscribe(async profileName => {
-            let profile = config.store.terminal.profiles.find(x => x.name === profileName)
-            if (!profile) {
-                console.error('Requested profile', profileName, 'not found')
-                return
-            }
-            terminal.openTabWithOptions(profile.sessionOptions)
-            hostApp.bringToFront()
-        })
-
-        dockMenu.update()
     }
 }
 

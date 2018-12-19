@@ -48,7 +48,6 @@ module.exports = {
     'wincredmgr',
     'path',
     'ngx-toastr',
-    'windows-process-tree/build/Release/windows_process_tree.node',
     /^rxjs/,
     /^@angular/,
     /^@ng-bootstrap/,

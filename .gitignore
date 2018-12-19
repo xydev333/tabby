@@ -5,7 +5,6 @@ node_modules
 
 build/files.wxs
 dist
-*/dist
 
 *.xcworkspacedata
 *.xcuserstate

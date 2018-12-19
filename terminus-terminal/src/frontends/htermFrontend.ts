@@ -153,14 +153,7 @@ export class HTermFrontend extends Frontend {
     }
 
     private setFontSize () {
-        let size = this.configuredFontSize * Math.pow(1.1, this.zoom)
-        preferenceManager.set('font-size', size)
-        if (this.term) {
-            setTimeout(() => {
-                this.term.scrollPort_.characterSize = this.term.scrollPort_.measureCharacterSize()
-                this.term.setFontSize(size)
-            })
-        }
+        preferenceManager.set('font-size', this.configuredFontSize * Math.pow(1.1, this.zoom))
     }
 
     private init () {

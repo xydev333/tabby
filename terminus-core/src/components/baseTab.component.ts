@@ -69,7 +69,7 @@ export abstract class BaseTabComponent {
         this.activity.next(false)
     }
 
-    async getRecoveryToken (): Promise<any> {
+    getRecoveryToken (): any {
         return null
     }
 

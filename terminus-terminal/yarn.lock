@@ -2,17 +2,15 @@
 # yarn lockfile v1
 
 
-"@terminus-term/node-pty@0.7.8":
-  version "0.7.8"
-  resolved "https://registry.yarnpkg.com/@terminus-term/node-pty/-/node-pty-0.7.8.tgz#32cf62c3dcd8937997b3ec137d4907ed015c7295"
-  integrity sha512-jqo0wcF/f3wiNd1fseEDgmSR5T83t/vhVzAqmuhNSkcG0tRGRD/o68JEGcqUQukvE9SkmJc4nDDfh6FmgSVi5g==
-  dependencies:
-    nan "2.10.0"
-
 "@terminus-term/xterm@3.8.4":
   version "3.8.4"
   resolved "https://registry.yarnpkg.com/@terminus-term/xterm/-/xterm-3.8.4.tgz#c9a9d9e0d46dbd8a94e06384e2d7268d36f5b0c6"
   integrity sha512-DrxCjnJh9n3ivpldwI098PnuVYwg9e5lFlU8/1qfh/J/wFHbG3dX/bEtB4ynfTi3IXVJozFO2psD96+W2h3yeQ==
+
+"@types/async-lock@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@types/async-lock/-/async-lock-0.0.19.tgz#4bdb7f8d9ac2826588b98068903aedbd9d95dce8"
+  integrity sha1-S9t/jZrCgmWIuYBokDrtvZ2V3Og=
 
 "@types/deep-equal@^1.0.0":
   version "1.0.1"
@@ -45,6 +43,11 @@ any-promise@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/any-promise/-/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
   integrity sha1-q8av7tzqUugJzcA3au0845Y10X8=
+
+async-lock@^1.0.0:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/async-lock/-/async-lock-1.1.3.tgz#e47f1cbb6bec765b73e27ed8961d58006457ec08"
+  integrity sha512-nxlfFLGfCJ1r7p9zhR5OuL6jYkDd9P7FqSitfLji+C1NdyhCz4+rWW3kiPiyPASHhN7VlsKEvRWWbnME9lYngw==
 
 big.js@^3.1.3:
   version "3.2.0"
@@ -150,15 +153,17 @@ mz@^2.6.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@2.10.0:
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
-  integrity sha512-bAdJv7fBLhWC+/Bls0Oza+mvTaNQtP+1RyhhhvD95pgUJz6XM5IzgmxOkItJ9tkoCiplvAnXI1tNmmUD/eScyA==
-
 nan@>=2.10.0, nan@^2.10.0:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.11.1.tgz#90e22bccb8ca57ea4cd37cc83d3819b52eea6766"
   integrity sha512-iji6k87OSXa0CcrLl9z+ZiYSuR2o+c0bGuNmXdrhTQTakxytAFsC56SArGYoiHlJlFoHSnvmhpceZJaXkVuOtA==
+
+node-pty-tmp@0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/node-pty-tmp/-/node-pty-tmp-0.7.2.tgz#d1528245a46ab193c54e34792ee0b89d0f557417"
+  integrity sha512-/I0BluFKSy7SOnlR5TALVx+pQEJZQStsfkwCpmsxHymSUVc3dJeOLrbaaVtNsU0VchXF3KOZJmHk7EUdBmWbfQ==
+  dependencies:
+    nan "^2.10.0"
 
 object-assign@^4.0.1:
   version "4.1.1"
@@ -189,10 +194,10 @@ pseudomap@^1.0.2:
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
   integrity sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
 
-rage-edit@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/rage-edit/-/rage-edit-1.2.0.tgz#991860a60fef934d8a6d0f057e55786b02f94a2b"
-  integrity sha512-0RspBRc2s6We4g7hRCvT5mu7YPEnfjvQK8Tt354a2uUNJCMC7MKLvo/1mLvHUCQ/zbP6siQyp5VRZN7UCpMFZg==
+rage-edit-tmp@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rage-edit-tmp/-/rage-edit-tmp-1.1.0.tgz#fc5d76716d2fe2cf97dcafbf3e26753e3a08e3b2"
+  integrity sha512-lR97QHY5WSf9orInMJhPqUbenkdiy7QbXUoRMI+wBZGyAPkxNwgo7h6ojq634QrBf/kQo3mVXYjuD3ZYraNaZQ==
 
 runes@^0.4.2:
   version "0.4.3"

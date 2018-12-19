@@ -1,29 +1,41 @@
-import { Component } from '@angular/core'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
+import { Component, Inject } from '@angular/core'
+import { Subscription } from 'rxjs'
 import { ConfigService, ElectronService } from 'terminus-core'
-import { EditProfileModalComponent } from './editProfileModal.component'
-import { IShell, Profile } from '../api'
-import { TerminalService } from '../services/terminal.service'
+import { IShell, ShellProvider, SessionPersistenceProvider } from '../api'
 
 @Component({
     template: require('./shellSettingsTab.component.pug'),
 })
 export class ShellSettingsTabComponent {
     shells: IShell[] = []
-    profiles: Profile[] = []
+    persistenceProviders: SessionPersistenceProvider[]
+
+    environmentVars: {key: string, value: string}[] = []
+    private configSubscription: Subscription
 
     constructor (
         public config: ConfigService,
         private electron: ElectronService,
-        private terminalService: TerminalService,
-        private ngbModal: NgbModal,
+        @Inject(ShellProvider) private shellProviders: ShellProvider[],
+        @Inject(SessionPersistenceProvider) persistenceProviders: SessionPersistenceProvider[],
     ) {
+        this.persistenceProviders = this.config.enabledServices(persistenceProviders).filter(x => x.isAvailable())
+
         config.store.terminal.environment = config.store.terminal.environment || {}
-        this.profiles = config.store.terminal.profiles
+        this.reloadEnvironment()
+        this.configSubscription = config.changed$.subscribe(() => this.reloadEnvironment())
     }
 
     async ngOnInit () {
-        this.shells = await this.terminalService.shells$.toPromise()
+        this.shells = (await Promise.all(this.config.enabledServices(this.shellProviders).map(x => x.provide()))).reduce((a, b) => a.concat(b))
+    }
+
+    openConPtyInfo() {
+        this.electron.shell.openExternal('https://github.com/Microsoft/node-pty/issues/216')
+    }
+
+    ngOnDestroy () {
+        this.configSubscription.unsubscribe()
     }
 
     pickWorkingDirectory () {
@@ -38,29 +50,23 @@ export class ShellSettingsTabComponent {
         }
     }
 
-    newProfile (shell: IShell) {
-        let profile: Profile = {
-            name: shell.name,
-            sessionOptions: this.terminalService.optionsFromShell(shell),
+    reloadEnvironment () {
+        this.environmentVars = Object.entries(this.config.store.terminal.environment).map(([k, v]) => ({ key: k, value: v as string }))
+    }
+
+    saveEnvironment () {
+        this.config.store.terminal.environment = {}
+        for (let pair of this.environmentVars) {
+            this.config.store.terminal.environment[pair.key] = pair.value
         }
-        this.profiles.push(profile)
-        this.config.store.terminal.profiles.push(profile)
-        this.config.save()
-        this.editProfile(profile)
     }
 
-    editProfile (profile: Profile) {
-        let modal = this.ngbModal.open(EditProfileModalComponent)
-        modal.componentInstance.profile = Object.assign({}, profile)
-        modal.result.then(result => {
-            Object.assign(profile, result)
-            this.config.save()
-        })
+    addEnvironmentVar () {
+        this.environmentVars.push({ key: '', value: '' })
     }
 
-    deleteProfile (profile: Profile) {
-        this.profiles = this.profiles.filter(x => x !== profile)
-        this.config.store.terminal.profiles = this.profiles
-        this.config.save()
+    removeEnvironmentVar (key: string) {
+        this.environmentVars = this.environmentVars.filter(x => x.key !== key)
+        this.saveEnvironment()
     }
 }

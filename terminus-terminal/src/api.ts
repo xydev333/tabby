@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs'
 import { TerminalTabComponent } from './components/terminalTab.component'
 
 export abstract class TerminalDecorator {
@@ -20,12 +21,19 @@ export interface SessionOptions {
     env?: any
     width?: number
     height?: number
+    recoveryId?: string
+    recoveredTruePID$?: Observable<number>
     pauseAfterExit?: boolean
 }
 
-export interface Profile {
-    name: string,
-    sessionOptions: SessionOptions,
+export abstract class SessionPersistenceProvider {
+    abstract id: string
+    abstract displayName: string
+
+    abstract isAvailable (): boolean
+    abstract async attachSession (recoveryId: any): Promise<SessionOptions>
+    abstract async startSession (options: SessionOptions): Promise<any>
+    abstract async terminateSession (recoveryId: string): Promise<void>
 }
 
 export interface ITerminalColorScheme {
