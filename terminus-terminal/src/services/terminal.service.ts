@@ -1,8 +1,7 @@
 import { Observable, AsyncSubject } from 'rxjs'
 import { Injectable, Inject } from '@angular/core'
 import { AppService, Logger, LogService, ConfigService } from 'terminus-core'
-import { IShell, ShellProvider } from '../api'
-import { SessionsService } from './sessions.service'
+import { IShell, ShellProvider, SessionOptions } from '../api'
 import { TerminalTabComponent } from '../components/terminalTab.component'
 
 @Injectable()
@@ -14,7 +13,6 @@ export class TerminalService {
 
     constructor (
         private app: AppService,
-        private sessions: SessionsService,
         private config: ConfigService,
         @Inject(ShellProvider) private shellProviders: ShellProvider[],
         log: LogService,
@@ -52,22 +50,31 @@ export class TerminalService {
             let shells = await this.shells$.toPromise()
             shell = shells.find(x => x.id === this.config.store.terminal.shell) || shells[0]
         }
-        let env: any = Object.assign({}, process.env, shell.env || {}, this.config.store.terminal.environment || {})
 
         this.logger.log(`Starting shell ${shell.name}`, shell)
-        let sessionOptions = await this.sessions.prepareNewSession({
+        let sessionOptions = {
+            ...this.optionsFromShell(shell),
+            pauseAfterExit: pause,
+            cwd,
+        }
+
+        return this.openTabWithOptions(sessionOptions)
+    }
+
+    optionsFromShell (shell: IShell) {
+        return {
             command: shell.command,
             args: shell.args || [],
-            cwd,
-            env,
-            pauseAfterExit: pause,
-        })
+            env: shell.env,
+        }
+    }
 
+    openTabWithOptions (sessionOptions: SessionOptions): TerminalTabComponent {
         this.logger.log('Using session options:', sessionOptions)
 
         return this.app.openNewTab(
             TerminalTabComponent,
-            { sessionOptions, shell }
+            { sessionOptions }
         ) as TerminalTabComponent
     }
 }
