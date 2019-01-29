@@ -1,6 +1,6 @@
 h3.mb-3 Appearance
-.d-flex
-    .mr-5
+.row
+    .col-md-6
         .form-line
             .header
                 .title Frontend
@@ -26,7 +26,6 @@ h3.mb-3 Appearance
                 )
                 input.form-control.w-25(
                     type='number',
-                    max='48',
                     [(ngModel)]='config.store.terminal.fontSize',
                     (ngModelChange)='config.save()',
                 )
@@ -92,7 +91,7 @@ h3.mb-3 Appearance
                 [title]='idx',
             )
 
-    div
+    .col-md-6
         .form-group
             .appearance-preview(
                 [style.font-family]='config.store.terminal.font',

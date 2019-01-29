@@ -5,7 +5,6 @@ import { BaseTabComponent } from '../components/baseTab.component'
 import { Logger, LogService } from './log.service'
 import { ConfigService } from './config.service'
 import { HostAppService } from './hostApp.service'
-import { TabRecoveryService } from './tabRecovery.service'
 
 export declare type TabComponentType = new (...args: any[]) => BaseTabComponent
 
@@ -62,25 +61,11 @@ export class AppService {
         private config: ConfigService,
         private hostApp: HostAppService,
         private injector: Injector,
-        private tabRecovery: TabRecoveryService,
         log: LogService,
     ) {
         this.logger = log.create('app')
 
         this.hostApp.windowCloseRequest$.subscribe(() => this.closeWindow())
-
-        this.tabRecovery.recoverTabs().then(tabs => {
-            for (let tab of tabs) {
-                this.openNewTab(tab.type, tab.options)
-            }
-
-            this.tabsChanged$.subscribe(() => {
-                tabRecovery.saveTabs(this.tabs)
-            })
-            setInterval(() => {
-                tabRecovery.saveTabs(this.tabs)
-            }, 30000)
-        })
     }
 
     openNewTab (type: TabComponentType, inputs?: any): BaseTabComponent {
@@ -120,9 +105,7 @@ export class AppService {
         this.activeTab = tab
         this.activeTabChange.next(tab)
         if (this.activeTab) {
-            setImmediate(() => {
-                this.activeTab.emitFocused()
-            })
+            this.activeTab.emitFocused()
             this.hostApp.setTitle(this.activeTab.title)
         }
     }
@@ -175,17 +158,6 @@ export class AppService {
         }
         this.tabsChanged.next()
         this.tabClosed.next(tab)
-    }
-
-    async duplicateTab (tab: BaseTabComponent) {
-        let token = await tab.getRecoveryToken()
-        if (!token) {
-            return
-        }
-        let recoveredTab = await this.tabRecovery.recoverTab(token)
-        if (recoveredTab) {
-            this.openNewTab(recoveredTab.type, recoveredTab.options)
-        }
     }
 
     async closeWindow () {

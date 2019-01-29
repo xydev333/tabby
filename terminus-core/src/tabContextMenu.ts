@@ -67,7 +67,6 @@ export class CommonOptionsContextMenu extends TabContextMenuItemProvider {
 
     constructor (
         private zone: NgZone,
-        private app: AppService,
     ) {
         super()
     }
@@ -77,10 +76,6 @@ export class CommonOptionsContextMenu extends TabContextMenuItemProvider {
             {
                 label: 'Rename',
                 click: () => this.zone.run(() => tabHeader.showRenameTabModal())
-            },
-            {
-                label: 'Duplicate',
-                click: () => this.zone.run(() => this.app.duplicateTab(tab))
             },
             {
                 label: 'Color',

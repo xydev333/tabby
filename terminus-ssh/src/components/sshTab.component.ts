@@ -26,10 +26,6 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
         })
 
         super.ngOnInit()
-
-        setImmediate(() => {
-            this.setTitle(this.connection.name)
-        })
     }
 
     async initializeSession () {
