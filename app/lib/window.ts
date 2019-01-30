@@ -11,7 +11,7 @@ let AccentState: any
 let DwmEnableBlurBehindWindow: any
 if (process.platform === 'win32') {
     SetWindowCompositionAttribute = require('windows-swca').SetWindowCompositionAttribute
-    AccentState = require('windows-swca').ACCENT_STATE
+    AccentState = require('windows-swca').AccentState
     DwmEnableBlurBehindWindow = require('windows-blurbehind').DwmEnableBlurBehindWindow
 }
 
@@ -103,14 +103,16 @@ export class Window {
         if (process.platform === 'win32') {
             if (parseFloat(os.release()) >= 10) {
                 let attribValue = AccentState.ACCENT_DISABLED
+                let color = 0x00000000
                 if (enabled) {
                     if (parseInt(os.release().split('.')[2]) >= 17063 && type === 'fluent') {
-                        attribValue = AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND
+                        attribValue = AccentState.ACCENT_ENABLE_FLUENT
+                        color = 0x01000000 // using a small alpha because acrylic bugs out at full transparency.
                     } else {
                         attribValue = AccentState.ACCENT_ENABLE_BLURBEHIND
                     }
                 }
-                SetWindowCompositionAttribute(this.window.getNativeWindowHandle(), attribValue, 0x00000000)
+                SetWindowCompositionAttribute(this.window, attribValue, color)
             } else {
                 DwmEnableBlurBehindWindow(this.window, enabled)
             }
