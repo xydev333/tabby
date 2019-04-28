@@ -1,13 +1,10 @@
 import { Frontend } from './frontend'
 import { Terminal, ITheme } from 'xterm'
-import * as fit from 'xterm/src/addons/fit/fit'
-import * as ligatures from 'xterm-addon-ligatures-tmp'
+import { fit } from 'xterm/src/addons/fit/fit'
+import { enableLigatures } from 'xterm-addon-ligatures'
 import 'xterm/lib/xterm.css'
 import './xterm.css'
 import deepEqual = require('deep-equal')
-
-Terminal.applyAddon(fit)
-Terminal.applyAddon(ligatures)
 
 /** @hidden */
 export class XTermFrontend extends Frontend {
@@ -29,16 +26,16 @@ export class XTermFrontend extends Frontend {
         })
         this.xtermCore = (this.xterm as any)._core
 
-        this.xterm.onData(data => {
+        this.xterm.on('data', data => {
             this.input.next(data)
         })
-        this.xterm.onResize(({ cols, rows }) => {
+        this.xterm.on('resize', ({ cols, rows }) => {
             this.resize.next({ rows, columns: cols })
         })
-        this.xterm.onTitleChange(title => {
+        this.xterm.on('title', title => {
             this.title.next(title)
         })
-        this.xterm.onSelectionChange(() => {
+        this.xterm.on('selection', () => {
             if (this.copyOnSelect) {
                 this.copySelection()
             }
@@ -75,7 +72,7 @@ export class XTermFrontend extends Frontend {
 
         this.resizeHandler = () => {
             try {
-                (this.xterm as any).fit()
+                fit(this.xterm)
             } catch {
                 // tends to throw when element wasn't shown yet
             }
@@ -146,11 +143,14 @@ export class XTermFrontend extends Frontend {
     configure (): void {
         let config = this.configService.store
 
-        setTimeout(() => {
+        setImmediate(() => {
             if (this.xterm.cols && this.xterm.rows) {
+                this.xtermCore.charMeasure.measure(this.xtermCore.options)
+                this.xtermCore.renderer._updateDimensions()
                 this.resizeHandler()
             }
         })
+
         this.xterm.setOption('fontFamily', `"${config.terminal.font}", "monospace-fallback", monospace`)
         this.xterm.setOption('bellStyle', config.terminal.bell)
         this.xterm.setOption('cursorStyle', {
@@ -185,7 +185,7 @@ export class XTermFrontend extends Frontend {
         }
 
         if (config.terminal.ligatures && this.xterm.element) {
-            (this.xterm as any).enableLigatures()
+             enableLigatures(this.xterm)
         }
     }
 
