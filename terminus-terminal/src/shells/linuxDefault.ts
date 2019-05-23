@@ -37,7 +37,6 @@ export class LinuxDefaultShellProvider extends ShellProvider {
                 name: 'User default',
                 command: line.split(':')[6],
                 args: ['--login'],
-                hidden: true,
                 env: {},
             }]
         }

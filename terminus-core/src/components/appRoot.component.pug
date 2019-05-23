@@ -44,13 +44,11 @@ title-bar(
                     ngbDropdownToggle,
                 )
                 div(*ngIf='button.submenu', ngbDropdownMenu)
-                    button.dropdown-item.d-flex.align-items-center(
+                    button.dropdown-item(
                         *ngFor='let item of button.submenuItems', 
                         (click)='item.click()',
                         ngbDropdownItem,
-                    ) 
-                        .icon-wrapper([innerHTML]='item.icon')
-                        .ml-3 {{item.title}}
+                    ) {{item.title}}
 
         .drag-space.background([class.persistent]='config.store.appearance.frame == "thin" && hostApp.platform != Platform.macOS')
 
@@ -67,13 +65,11 @@ title-bar(
                     ngbDropdownToggle,
                 )
                 div(*ngIf='button.submenu', ngbDropdownMenu)
-                    button.dropdown-item.d-flex.align-items-center(
+                    button.dropdown-item(
                         *ngFor='let item of button.submenuItems', 
                         (click)='item.click()',
                         ngbDropdownItem,
-                    ) 
-                        .icon-wrapper([innerHTML]='item.icon')
-                        .ml-3 {{item.title}}
+                    ) {{item.title}}
 
             button.btn.btn-secondary.btn-tab-bar.btn-update(
                 *ngIf='updatesAvailable',

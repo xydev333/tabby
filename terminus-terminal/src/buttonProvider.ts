@@ -46,7 +46,7 @@ export class ButtonProvider extends ToolbarButtonProvider {
                 submenu: async () => {
                     let profiles = await this.terminal.getProfiles()
                     return profiles.map(profile => ({
-                        icon: profile.icon,
+                        icon: null,
                         title: profile.name,
                         click: () => this.terminal.openTab(profile),
                     }))

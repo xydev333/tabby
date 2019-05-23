@@ -74,7 +74,7 @@ export class TerminalHotkeyProvider extends HotkeyProvider {
         return [
             ...this.hotkeys,
             ...profiles.map(profile => ({
-                id: `profile.${slug(profile.name).toLowerCase()}`,
+                id: `profile.${slug(profile.name)}`,
                 name: `New tab: ${profile.name}`
             })),
         ]

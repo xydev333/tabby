@@ -47,7 +47,7 @@ export class ShellSettingsTabComponent {
     }
 
     async reload () {
-        this.profiles = await this.terminalService.getProfiles(true)
+        this.profiles = await this.terminalService.getProfiles()
     }
 
     pickWorkingDirectory () {

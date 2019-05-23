@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import * as os from 'os'
 import { Injectable } from '@angular/core'
 import { Logger, LogService } from './log.service'
 import { ElectronService } from './electron.service'
@@ -11,9 +11,8 @@ const UPDATES_URL = 'https://api.github.com/repos/eugeny/terminus/releases/lates
 export class UpdaterService {
     private logger: Logger
     private downloaded: Promise<boolean>
-    private electronUpdaterAvailable = true
+    private isSquirrel = true
     private updateURL: string
-    private autoUpdater
 
     constructor (
         log: LogService,
@@ -21,33 +20,38 @@ export class UpdaterService {
     ) {
         this.logger = log.create('updater')
 
-        this.autoUpdater = electron.remote.require('electron-updater').autoUpdater
+        try {
+            electron.autoUpdater.setFeedURL(`https://terminus-updates.herokuapp.com/update/${os.platform()}/${electron.app.getVersion()}`)
+        } catch (e) {
+            this.isSquirrel = false
+            this.logger.info('Squirrel updater unavailable, falling back')
+        }
 
-        this.autoUpdater.on('update-available', () => {
+        this.electron.autoUpdater.on('update-available', () => {
             this.logger.info('Update available')
         })
-        this.autoUpdater.once('update-not-available', () => {
+        this.electron.autoUpdater.once('update-not-available', () => {
             this.logger.info('No updates')
         })
 
         this.downloaded = new Promise<boolean>(resolve => {
-            this.autoUpdater.once('update-downloaded', () => resolve(true))
+            this.electron.autoUpdater.once('update-downloaded', () => resolve(true))
         })
 
         this.logger.debug('Checking for updates')
 
-        if (this.electronUpdaterAvailable) {
+        if (this.isSquirrel) {
             try {
-                this.autoUpdater.checkForUpdates()
+                this.electron.autoUpdater.checkForUpdates()
             } catch (e) {
-                this.electronUpdaterAvailable = false
-                this.logger.info('Electron updater unavailable, falling back', e)
+                this.isSquirrel = false
+                this.logger.info('Squirrel updater unavailable, falling back')
             }
         }
     }
 
     async check (): Promise<boolean> {
-        if (!this.electronUpdaterAvailable) {
+        if (!this.isSquirrel) {
             this.logger.debug('Checking for updates')
             let response = await axios.get(UPDATES_URL)
             let data = response.data
@@ -64,11 +68,11 @@ export class UpdaterService {
     }
 
     async update () {
-        if (!this.electronUpdaterAvailable) {
+        if (!this.isSquirrel) {
             this.electron.shell.openExternal(this.updateURL)
         } else {
             await this.downloaded
-            this.autoUpdater.quitAndInstall()
+            this.electron.autoUpdater.quitAndInstall()
         }
     }
 }
