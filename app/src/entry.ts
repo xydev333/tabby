@@ -3,8 +3,6 @@ import 'core-js/es7/reflect'
 import 'core-js/core/delay'
 import 'rxjs'
 
-import isDev = require('electorn-is-dev')
-
 import './global.scss'
 import './toastr.scss'
 
@@ -23,7 +21,7 @@ if (process.platform === 'win32') {
     process.env.HOME = process.env.HOMEDRIVE + process.env.HOMEPATH
 }
 
-if (isDev) {
+if (require('electron-is-dev')) {
     console.warn('Running in debug mode')
 } else {
     enableProdMode()
