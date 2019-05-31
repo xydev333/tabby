@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/deep-equal": "^1.0.0",
     "@types/mz": "0.0.32",
-    "@types/node": "12.0.3",
+    "@types/node": "12.0.4",
     "@types/slug": "^0.9.1",
     "@types/webpack-env": "1.13.9",
     "dataurl": "0.1.0",
@@ -27,7 +27,7 @@
     "file-loader": "^0.11.2",
     "slug": "^1.1.0",
     "uuid": "^3.3.2",
-    "xterm": "3.13.2",
+    "xterm": "3.14.0",
     "xterm-addon-ligatures": "^0.1.0-beta-2"
   },
   "peerDependencies": {
