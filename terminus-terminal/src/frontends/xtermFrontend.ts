@@ -1,7 +1,9 @@
 import { Frontend } from './frontend'
 import { Terminal, ITheme } from 'xterm'
-import { FitAddon } from './xtermAddonFit'
+import { fit } from 'xterm/src/addons/fit/fit'
 import { enableLigatures } from 'xterm-addon-ligatures'
+import { SearchAddon, ISearchOptions } from './xtermSearchAddon'
+import 'xterm/lib/xterm.css'
 import './xterm.css'
 import deepEqual = require('deep-equal')
 
@@ -15,13 +17,14 @@ export class XTermFrontend extends Frontend {
     private resizeHandler: () => void
     private configuredTheme: ITheme = {}
     private copyOnSelect = false
-    private fitAddon = new FitAddon()
-    private opened = false
+    private search = new SearchAddon()
 
     constructor () {
         super()
         this.xterm = new Terminal({
             allowTransparency: true,
+            enableBold: true,
+            experimentalCharAtlas: 'dynamic',
         })
         this.xtermCore = (this.xterm as any)._core
 
@@ -39,7 +42,6 @@ export class XTermFrontend extends Frontend {
                 this.copySelection()
             }
         })
-        this.xterm.loadAddon(this.fitAddon)
 
         const keyboardEventHandler = (name: string, event: KeyboardEvent) => {
             this.hotkeysService.pushKeystroke(name, event)
@@ -72,7 +74,7 @@ export class XTermFrontend extends Frontend {
 
         this.resizeHandler = () => {
             try {
-                this.fitAddon.fit()
+                fit(this.xterm)
             } catch {
                 // tends to throw when element wasn't shown yet
             }
@@ -86,14 +88,10 @@ export class XTermFrontend extends Frontend {
 
     attach (host: HTMLElement): void {
         this.xterm.open(host)
-        this.opened = true
-        ;(this.xterm as any).loadWebgl(false)
-        if (this.configService.store.terminal.ligatures) {
-            enableLigatures(this.xterm)
-        }
-
         this.ready.next(null)
         this.ready.complete()
+
+        this.xterm.loadAddon(this.search)
 
         window.addEventListener('resize', this.resizeHandler)
 
@@ -194,7 +192,7 @@ export class XTermFrontend extends Frontend {
             this.configuredTheme = theme
         }
 
-        if (this.opened && config.terminal.ligatures) {
+        if (config.terminal.ligatures && this.xterm.element) {
             enableLigatures(this.xterm)
         }
     }
@@ -202,6 +200,14 @@ export class XTermFrontend extends Frontend {
     setZoom (zoom: number): void {
         this.zoom = zoom
         this.setFontSize()
+    }
+
+    findNext (term: string, searchOptions?: ISearchOptions): boolean {
+        return this.search.findNext(term, searchOptions)
+    }
+
+    findPrevious (term: string, searchOptions?: ISearchOptions): boolean {
+        return this.search.findPrevious(term, searchOptions)
     }
 
     private setFontSize () {
