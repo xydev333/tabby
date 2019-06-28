@@ -7,7 +7,7 @@ variables:
 jobs:
 - job: Windows
   pool:
-    vmImage: 'vs2015-win2012r2'
+    vmImage: 'vs2017-win2016'
 
   steps:
   - task: NodeTool@0
@@ -15,7 +15,7 @@ jobs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
 
-  - script: yarn
+  - script: yarn --network-timeout 100000
     displayName: 'Install dependencies'
 
   - script: node scripts/build-native.js
@@ -144,7 +144,7 @@ jobs:
 
 - job: macOS
   pool:
-    vmImage: 'macOS-10.13'
+    vmImage: 'macOS-10.14'
 
   steps:
   - task: NodeTool@0
