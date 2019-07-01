@@ -30,8 +30,7 @@ export class DockingService {
         }
 
         const newBounds: Bounds = { x: 0, y: 0, width: 0, height: 0 }
-        
-        const fill = this.config.store.appearance.dockFill <= 1 ? this.config.store.appearance.dockFill : 1;
+        const fill = this.config.store.appearance.dockFill
         const [minWidth, minHeight] = this.hostApp.getWindow().getMinimumSize()
 
         if (dockSide === 'left' || dockSide === 'right') {
@@ -64,15 +63,15 @@ export class DockingService {
     }
 
     getScreens () {
-        const primaryDisplayID = this.electron.screen.getPrimaryDisplay().id;
-        return this.electron.screen.getAllDisplays().sort((a,b) => (
-            a.bounds.x === b.bounds.x ? a.bounds.y - b.bounds.y : a.bounds.x - b.bounds.x
-        )).map((display,index) => {
+        return this.electron.screen.getAllDisplays().map((display, index) => {
             return {
                 id: display.id,
-                name: display.id === primaryDisplayID ? 'Primary Display' : `Display ${index +1}`,
+                name: [
+                    'Primary display',
+                    'Secondary display',
+                ][index] || `Display ${index + 1}`,
             }
-        });
+        })
     }
 
     private repositionWindow () {
