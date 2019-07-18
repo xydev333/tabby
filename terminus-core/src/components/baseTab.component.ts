@@ -147,15 +147,13 @@ export abstract class BaseTabComponent {
     /**
      * Called before the tab is closed
      */
-    destroy (skipDestroyedEvent = false): void {
+    destroy (): void {
         this.focused.complete()
         this.blurred.complete()
         this.titleChange.complete()
         this.progress.complete()
         this.recoveryStateChangedHint.complete()
-        if (!skipDestroyedEvent) {
-            this.destroyed.next()
-        }
+        this.destroyed.next()
         this.destroyed.complete()
     }
 }

@@ -147,10 +147,6 @@ export class Window {
         this.window.webContents.send(event, ...args)
     }
 
-    isDestroyed() {
-        return !this.window || this.window.isDestroyed();
-    }
-
     private setupWindowManagement () {
         this.window.on('show', () => {
             this.visible.next(true)

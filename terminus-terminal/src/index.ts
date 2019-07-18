@@ -156,17 +156,9 @@ export default class TerminalModule { // eslint-disable-line @typescript-eslint/
             }
         })
         if (config.store.terminal.autoOpen) {
-
-            let argv = require('electron').remote.process.argv;
-            if (argv[0].includes('node')) {
-                argv = argv.slice(1)
-            }
-
-            if(require('yargs').parse(argv.slice(1))._[0] !== "open"){
-                app.ready$.subscribe(() => {
-                    terminal.openTab()
-                })
-            }
+            app.ready$.subscribe(() => {
+                terminal.openTab()
+            })
         }
 
         hotkeys.matchedHotkey.subscribe(async (hotkey) => {

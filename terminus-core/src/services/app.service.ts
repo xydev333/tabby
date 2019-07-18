@@ -1,11 +1,8 @@
-
 import { Observable, Subject, AsyncSubject } from 'rxjs'
 import { takeUntil } from 'rxjs/operators'
 import { Injectable } from '@angular/core'
-
 import { BaseTabComponent } from '../components/baseTab.component'
 import { SplitTabComponent } from '../components/splitTab.component'
-
 import { ConfigService } from './config.service'
 import { HostAppService } from './hostApp.service'
 import { TabRecoveryService } from './tabRecovery.service'
@@ -70,19 +67,18 @@ export class AppService {
         private tabRecovery: TabRecoveryService,
         private tabsService: TabsService,
     ) {
-        if (hostApp.getWindow().id === 1) {
-            this.tabRecovery.recoverTabs().then(tabs => {
-                for (const tab of tabs) {
-                    this.openNewTabRaw(tab.type, tab.options)
-                }
-                this.tabsChanged$.subscribe(() => {
-                    tabRecovery.saveTabs(this.tabs)
-                })
-                setInterval(() => {
-                    tabRecovery.saveTabs(this.tabs)
-                }, 30000)
+        this.tabRecovery.recoverTabs().then(tabs => {
+            for (const tab of tabs) {
+                this.openNewTabRaw(tab.type, tab.options)
+            }
+
+            this.tabsChanged$.subscribe(() => {
+                tabRecovery.saveTabs(this.tabs)
             })
-        }
+            setInterval(() => {
+                tabRecovery.saveTabs(this.tabs)
+            }, 30000)
+        })
     }
 
     addTabRaw (tab: BaseTabComponent) {
@@ -91,11 +87,9 @@ export class AppService {
         this.tabsChanged.next()
         this.tabOpened.next(tab)
 
-        if (this.hostApp.getWindow().id === 1) {
-            tab.recoveryStateChangedHint$.subscribe(() => {
-                this.tabRecovery.saveTabs(this.tabs)
-            })
-        }
+        tab.recoveryStateChangedHint$.subscribe(() => {
+            this.tabRecovery.saveTabs(this.tabs)
+        })
 
         tab.titleChange$.subscribe(title => {
             if (tab === this._activeTab) {
@@ -219,7 +213,7 @@ export class AppService {
             }
         }
         for (const tab of this.tabs) {
-            tab.destroy(true);
+            tab.destroy()
         }
     }
 
