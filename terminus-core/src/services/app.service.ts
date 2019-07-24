@@ -206,19 +206,15 @@ export class AppService {
         }
     }
 
-    /**
-     * Attempts to close all tabs, returns false if one of the tabs blocked closure
-     */
-    async closeAllTabs (): Promise<boolean> {
+    async closeAllTabs () {
         for (const tab of this.tabs) {
             if (!await tab.canClose()) {
-                return false
+                return
             }
         }
         for (const tab of this.tabs) {
             tab.destroy()
         }
-        return true
     }
 
     /** @hidden */

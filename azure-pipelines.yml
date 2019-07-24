@@ -86,9 +86,6 @@ jobs:
   - script: yarn run build
     displayName: 'Build'
 
-  - script: yarn run lint
-    displayName: 'Lint'
-
   - script: node scripts/prepackage-plugins.js
     displayName: 'Prepackage plugins'
 

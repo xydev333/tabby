@@ -10,7 +10,7 @@ import { AppService } from '../services/app.service'
 import { HostAppService, Platform } from '../services/hostApp.service'
 
 /** @hidden */
-export interface SortableComponentProxy {
+export interface ISortableComponent {
     setDragHandle (_: HTMLElement)
 }
 
@@ -34,7 +34,7 @@ export class TabHeaderComponent {
         private hostApp: HostAppService,
         private ngbModal: NgbModal,
         private hotkeys: HotkeysService,
-        @Inject(SortableComponent) private parentDraggable: SortableComponentProxy,
+        @Inject(SortableComponent) private parentDraggable: ISortableComponent,
         @Optional() @Inject(TabContextMenuItemProvider) protected contextMenuProviders: TabContextMenuItemProvider[],
     ) {
         this.hotkeys.matchedHotkey.subscribe((hotkey) => {

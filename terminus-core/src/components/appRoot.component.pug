@@ -77,7 +77,7 @@ title-bar(
 
             button.btn.btn-secondary.btn-tab-bar.btn-update(
                 *ngIf='updatesAvailable',
-                title='Update available - Click to install',
+                title='Update available',
                 (click)='updateApp()',
                 [innerHTML]='sanitizeIcon(updateIcon)'
             )
