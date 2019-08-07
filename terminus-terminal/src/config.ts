@@ -27,7 +27,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             copyOnSelect: false,
             scrollOnInput: true,
             workingDirectory: '',
-            alwaysUseWorkingDirectory: false,
             altIsMeta: false,
             colorScheme: {
                 __nonStructural: true,

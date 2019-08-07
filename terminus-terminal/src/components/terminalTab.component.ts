@@ -97,6 +97,5 @@ export class TerminalTabComponent extends BaseTerminalTabComponent {
     ngOnDestroy () {
         this.homeEndSubscription.unsubscribe()
         super.ngOnDestroy()
-        this.session.destroy()
     }
 }
