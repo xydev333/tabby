@@ -18,7 +18,7 @@ try {
 } catch { }
 
 try {
-    var windowsProcessTree = require('@terminus-term/windows-process-tree')  // eslint-disable-line @typescript-eslint/no-var-requires
+    var windowsProcessTree = require('windows-process-tree')  // eslint-disable-line @typescript-eslint/no-var-requires
 } catch { }
 
 
@@ -284,7 +284,7 @@ export class Session extends BaseSession {
             } catch (e) {
                 return null
             }
-            let cwd = lines[(lines[1] === 'fcwd') ? 2 : 1].substring(1)
+            let cwd = lines[lines[1] === 'fcwd' ? 2 : 1].substring(1)
             if (cwd.startsWith(catalinaDataVolumePrefix)) {
                 cwd = cwd.substring(catalinaDataVolumePrefix.length)
             }
