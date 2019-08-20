@@ -30,13 +30,13 @@
     "js-yaml": "3.13.1",
     "keytar": "^4.13.0",
     "mz": "^2.7.0",
-    "ngx-toastr": "^10.1.0",
+    "ngx-toastr": "^10.0.4",
     "node-pty": "^0.9.0-beta22",
     "npm": "6.9.0",
     "path": "0.12.7",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
-    "yargs": "^13.3.0",
+    "yargs": "^14.0.0",
     "zone.js": "^0.8.29"
   },
   "optionalDependencies": {
