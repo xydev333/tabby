@@ -56,6 +56,10 @@ export class ElectronService {
         browserWindow: Electron.BrowserWindow,
         options: Electron.MessageBoxOptions
     ): Promise<MessageBoxResponse> {
-        return this.dialog.showMessageBox(browserWindow, options)
+        return new Promise(resolve => {
+            this.dialog.showMessageBox(browserWindow, options, (response, checkboxChecked) => {
+                resolve({ response, checkboxChecked })
+            })
+        })
     }
 }
