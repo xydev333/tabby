@@ -14,18 +14,7 @@ jobs:
         version: 10
 
     - name: Build
-      run: |
-        cd app
-        yarn
-        cd ..
-        rm app/node_modules/.yarn-integrity
-        yarn
-        yarn run lint
-        scripts/build-native.js
-        yarn run build:typings
-        yarn run build
-        scripts/prepackage-plugins.js
-        scripts/build-macos.js
+      run: build/travis.sh
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
         BT_TOKEN: ${{ secrets.BT_TOKEN }}

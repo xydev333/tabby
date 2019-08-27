@@ -2,8 +2,7 @@
 const builder = require('electron-builder').build
 const vars = require('./vars')
 
-const isTag = (process.env.GITHUB_REF || process.env.BUILD_SOURCEBRANCH || '').startsWith('refs/tags/')
-const isCI = !!process.env.GITHUB_REF
+const isTag = (process.env.BUILD_SOURCEBRANCH || '').startsWith('refs/tags/')
 
 builder({
     dir: true,
