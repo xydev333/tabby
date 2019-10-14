@@ -8,10 +8,11 @@ import { Frontend, SearchOptions } from '../frontends/frontend'
     styles: [require('./searchPanel.component.scss')],
 })
 export class SearchPanelComponent {
+    static globalOptions: SearchOptions = {}
     @Input() query: string
     @Input() frontend: Frontend
     notFound = false
-    options: SearchOptions = {}
+    options: SearchOptions = SearchPanelComponent.globalOptions
 
     @Output() close = new EventEmitter()
 
