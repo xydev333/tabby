@@ -59,7 +59,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             environment: {},
             profiles: [],
             useConPTY: true,
-            recoverTabs: true,
         },
     }
 
