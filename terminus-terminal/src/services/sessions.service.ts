@@ -291,12 +291,7 @@ export class Session extends BaseSession {
             return cwd
         }
         if (process.platform === 'linux') {
-            try {
-                return await fs.readlink(`/proc/${this.truePID}/cwd`)
-            } catch (exc) {
-                console.error(exc)
-                return null
-            }
+            return fs.readlink(`/proc/${this.truePID}/cwd`)
         }
         if (process.platform === 'win32') {
             if (!this.guessedCWD) {
