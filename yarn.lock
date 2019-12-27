@@ -3146,10 +3146,12 @@ he@1.2.x:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
-highlight.js@^9.16.2:
-  version "9.16.2"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.16.2.tgz#68368d039ffe1c6211bcc07e483daf95de3e403e"
-  integrity sha512-feMUrVLZvjy0oC7FVJQcSQRqbBq9kwqnYE4+Kj9ZjbHh3g+BisiPgF49NyQbVLNdrL/qqZr3Ca9yOKwgn2i/tw==
+highlight.js@^9.17.1:
+  version "9.17.1"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.17.1.tgz#14a4eded23fd314b05886758bb906e39dd627f9a"
+  integrity sha512-TA2/doAur5Ol8+iM3Ov7qy3jYcr/QiJ2eDTdRF4dfbjG7AaaB99J5G+zSl11ljbl6cIcahgPY6SKb3sC3EJ0fw==
+  dependencies:
+    handlebars "^4.5.3"
 
 hoek@2.x.x:
   version "2.16.3"
@@ -3915,10 +3917,10 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
-loader-runner@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-3.1.0.tgz#e9440e5875f2ad2f968489cd2c7b59a4f2847fcb"
-  integrity sha512-wE/bOCdTKMR2rm7Xxh+eirDOmN7Vx7hntWgiTayuFPtF8MgsFDo49SP8kkYz8IVlEBTOtR7P+XI7bE1xjo/IkA==
+loader-runner@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-3.0.0.tgz#c86f303af2dacbd27eabd2ea3aaa957291562e23"
+  integrity sha512-BlinBEAJYOUubaKH9hMxshD1FltYLTd3FA4DoxEh/82C0Rc4cmcqI61bEUj0/osbmW9FCTXTpMAO/jHZDZC5Fw==
 
 loader-utils@1.2.3, loader-utils@^1.0.0, loader-utils@^1.1.0, loader-utils@^1.2.3:
   version "1.2.3"
@@ -4134,10 +4136,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-marked@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
-  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
+marked@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.8.0.tgz#ec5c0c9b93878dc52dd54be8d0e524097bd81a99"
+  integrity sha512-MyUe+T/Pw4TZufHkzAfDj6HarCBWia2y27/bhuYkTaiUnfDYFnCP3KUN+9oM7Wi6JA2rymtVYbQu3spE0GCmxQ==
 
 matcher@^2.0.0:
   version "2.0.0"
@@ -6634,10 +6636,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tapable@2.0.0-beta.9, tapable@^2.0.0-beta.8:
-  version "2.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.0.0-beta.9.tgz#638496fb27b53e69c21a0e6a4435afbe805845cb"
-  integrity sha512-+VBUuZXh+WIHnKOeo+A27SB/1sHTVWozcKweDIAhB/XOGnr8cy6ULZjU+qpGxO/G4xEyWCCaWTX/HPEkGg3Xrg==
+tapable@2.0.0-beta.8, tapable@^2.0.0-beta.8:
+  version "2.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-2.0.0-beta.8.tgz#0a8d42f6895d43d5a895de15d9a9e3e425f72a0a"
+  integrity sha512-7qMajFcHb2O+aWufLoAvKhEehIwikXUTH1s8RP4R5gSYMIB0Tmypp+J90EtSNVbIlI7oB0Oz8ZlpJUJlZ5owxQ==
 
 tapable@^1.0.0:
   version "1.1.3"
@@ -6921,31 +6923,31 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typedoc-default-themes@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.6.1.tgz#e2e471188983df995f4f9df49f713044fced6802"
-  integrity sha512-z5AWKqQDz7igl9WkUuafx8cEm4MPVQGMpbWE+3lwVOaq+U4UoLKBMnpFQWh/4fqQ3bGysXpOstMxy2OOzHezyw==
+typedoc-default-themes@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.6.3.tgz#c214ce5bbcc6045558448a8fd422b90e3e9b6782"
+  integrity sha512-rouf0TcIA4M2nOQFfC7Zp4NEwoYiEX4vX/ZtudJWU9IHA29MPC+PPgSXYLPESkUo7FuB//GxigO3mk9Qe1xp3Q==
   dependencies:
     backbone "^1.4.0"
     jquery "^3.4.1"
     lunr "^2.3.8"
     underscore "^1.9.1"
 
-typedoc@^0.15.3:
-  version "0.15.3"
-  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.15.3.tgz#8f5a038cfc1160f70cbc57e37908653483dca689"
-  integrity sha512-RGX+dgnm9fyg5KHj81/ZhMiee0FfvJnjBXedhedhMWlrtM4YRv3pn8sYCWRt5TMi1Jli3/JG224pbFo3/3uaGw==
+typedoc@^0.15.6:
+  version "0.15.6"
+  resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.15.6.tgz#d99a1c3db8c87a00437a8a89a0df03f9dc1995ad"
+  integrity sha512-TC3j7HXFfyq0/NyUL9oLgEXhgO4U8Kd7iyRgagkG3XxehgTjn6w20uJ/Hif1KPB/65VQZ8uMYYyxFXNj9um5Ow==
   dependencies:
     "@types/minimatch" "3.0.3"
     fs-extra "^8.1.0"
     handlebars "^4.5.3"
-    highlight.js "^9.16.2"
+    highlight.js "^9.17.1"
     lodash "^4.17.15"
-    marked "^0.7.0"
+    marked "^0.8.0"
     minimatch "^3.0.0"
     progress "^2.0.3"
     shelljs "^0.8.3"
-    typedoc-default-themes "^0.6.1"
+    typedoc-default-themes "^0.6.3"
     typescript "3.7.x"
 
 typescript@3.7.x, typescript@^3.7.3:
@@ -7267,10 +7269,10 @@ webpack-sources@^1.4.3:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^5.0.0-beta.11:
-  version "5.0.0-beta.11"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.0.0-beta.11.tgz#6326501cb99e8d0ad3eb92698c8f9d7405f42a85"
-  integrity sha512-vDdx5RXAE8b0BZMQCpoKXSkEAJ3xjYbnzExK+WZbIaf1WT7RBJXI7w3J/luhgGhCVGnfr3dmJg1o4DqGuuGa+w==
+webpack@^5.0.0-beta.7:
+  version "5.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.0.0-beta.7.tgz#e2dc0ed0543c71e97524be0fcb68a80de50aa898"
+  integrity sha512-ghllYmUzrCJi0Z2dohBXkEqvm7zkd2c4BO9oKfw7gTy8O/YaLr7JVFUki09ca77Xdt0JAbozFeXURlkDJTfDUw==
   dependencies:
     "@webassemblyjs/ast" "1.8.5"
     "@webassemblyjs/helper-module-context" "1.8.5"
@@ -7284,13 +7286,12 @@ webpack@^5.0.0-beta.11:
     glob-to-regexp "^0.4.1"
     graceful-fs "^4.1.15"
     json-parse-better-errors "^1.0.2"
-    loader-runner "^3.1.0"
+    loader-runner "3.0.0"
     loader-utils "^1.2.3"
-    mime "^2.4.4"
     neo-async "^2.6.1"
     pkg-dir "^4.2.0"
     schema-utils "^2.5.0"
-    tapable "2.0.0-beta.9"
+    tapable "2.0.0-beta.8"
     terser-webpack-plugin "^2.2.1"
     watchpack "2.0.0-beta.10"
     webpack-sources "2.0.0-beta.8"
