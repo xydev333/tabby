@@ -225,15 +225,6 @@
       "contributions": [
         "code"
       ]
-    },
-    {
-      "login": "LeSeulArtichaut",
-      "name": "LeSeulArtichaut",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/38361244?v=4",
-      "profile": "https://github.com/LeSeulArtichaut",
-      "contributions": [
-        "code"
-      ]
     }
   ],
   "contributorsPerLine": 7,
@@ -241,6 +232,5 @@
   "projectOwner": "Eugeny",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "commitConvention": "none",
-  "skipCi": true
+  "commitConvention": "none"
 }
