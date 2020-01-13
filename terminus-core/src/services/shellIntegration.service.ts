@@ -18,18 +18,11 @@ export class ShellIntegrationService {
     private automatorWorkflowsDestination: string
     private registryKeys = [
         {
-            path: 'Software\\Classes\\Directory\\Background\\shell\\Terminus',
-            value: 'Open Terminus here',
+            path: 'Software\\Classes\\Directory\\Background\\shell\\Open Terminus here',
             command: 'open "%V"',
         },
         {
-            path: 'SOFTWARE\\Classes\\Directory\\shell\\Terminus',
-            value: 'Open Terminus here',
-            command: 'open "%V"',
-        },
-        {
-            path: 'Software\\Classes\\*\\shell\\Terminus',
-            value: 'Paste path into Terminus',
+            path: 'Software\\Classes\\*\\shell\\Paste path into Terminus',
             command: 'paste "%V"',
         },
     ]
@@ -68,7 +61,6 @@ export class ShellIntegrationService {
             for (const registryKey of this.registryKeys) {
                 wnr.createRegistryKey(wnr.HK.CU, registryKey.path)
                 wnr.createRegistryKey(wnr.HK.CU, registryKey.path + '\\command')
-                wnr.setRegistryValue(wnr.HK.CU, registryKey.path, '', wnr.REG.SZ, registryKey.value)
                 wnr.setRegistryValue(wnr.HK.CU, registryKey.path, 'Icon', wnr.REG.SZ, exe)
                 wnr.setRegistryValue(wnr.HK.CU, registryKey.path + '\\command', '', wnr.REG.SZ, exe + ' ' + registryKey.command)
             }
