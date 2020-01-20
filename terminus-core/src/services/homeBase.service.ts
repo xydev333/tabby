@@ -30,14 +30,9 @@ export class HomeBaseService {
         let body = `Version: ${this.appVersion}\n`
         body += `Platform: ${os.platform()} ${os.release()}\n`
         const label = {
-            aix: 'OS: IBM AIX',
-            android: 'OS: Android',
             darwin: 'OS: macOS',
-            freebsd: 'OS: FreeBSD',
+            windows: 'OS: Windows',
             linux: 'OS: Linux',
-            openbsd: 'OS: OpenBSD',
-            sunos: 'OS: Solaris',
-            win32: 'OS: Windows',
         }[os.platform()]
         const plugins = (window as any).installedPlugins.filter(x => !x.isBuiltin).map(x => x.name)
         body += `Plugins: ${plugins.join(', ') || 'none'}\n\n`
