@@ -1,4 +1,5 @@
 import { app, ipcMain, Menu, Tray, shell } from 'electron'
+// eslint-disable-next-line no-duplicate-imports
 import * as electron from 'electron'
 import { loadConfig } from './config'
 import { Window, WindowOptions } from './window'
@@ -23,6 +24,7 @@ export class Application {
 
         app.commandLine.appendSwitch('disable-http-cache')
         app.commandLine.appendSwitch('lang', 'EN')
+        app.allowRendererProcessReuse = false
 
         for (const flag of configData.flags || [['force_discrete_gpu', '0']]) {
             app.commandLine.appendSwitch(flag[0], flag[1])
@@ -74,7 +76,7 @@ export class Application {
             this.tray = new Tray(`${app.getAppPath()}/assets/tray.png`)
         }
 
-        this.tray.on('click', () => setTimeout(() => this.focus()));
+        this.tray.on('click', () => setTimeout(() => this.focus()))
 
         const contextMenu = Menu.buildFromTemplate([{
             label: 'Show',
@@ -185,7 +187,7 @@ export class Application {
                         },
                     },
                 ],
-            }
+            },
         ]
 
         Menu.setApplicationMenu(Menu.buildFromTemplate(template))
