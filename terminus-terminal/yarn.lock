@@ -249,25 +249,25 @@ xterm-addon-ligatures@^0.2.1:
     font-finder "^1.0.4"
     font-ligatures "^1.3.2"
 
-xterm-addon-search@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.4.0.tgz#a7beadb3caa7330eb31fb1f17d92de25537684a1"
-  integrity sha512-g07qb/Z4aSfrQ25e6Z6rz6KiExm2DvesQXkx+eA715VABBr5VM/9Jf0INoCiDSYy/nn7rpna+kXiGVJejIffKg==
+xterm-addon-search@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.5.0.tgz#cd3a2f8056084c28e236d4e732da37682010bcc2"
+  integrity sha512-zLVqVTrg5w2nk9fRj3UuVKCPo/dmFe/cLf3EM9Is5Dm6cgOoXmeo9eq2KgD8A0gquAflTFTf0ya2NaFmShHwyg==
 
 xterm-addon-serialize@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/xterm-addon-serialize/-/xterm-addon-serialize-0.1.1.tgz#0fdff59702c00ed8288181198153ec47fd3df8da"
-  integrity sha512-6ykkAnyVsMZhKhUAR6Uml1t8kwpmPqoZm8qERfQX+kI4+m6UGf9ec4SLteDGpYMh/6hLrN7WZqSukfsU3Eof9g==
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/xterm-addon-serialize/-/xterm-addon-serialize-0.1.2.tgz#339a38520bf90cf51f447cb74f3ae0e530d5ee39"
+  integrity sha512-etSTiN+I3lqWefMixiiVo1V4lPjmfInFmwtjbYDYWyUwPU5tveEZZSu15b52Q26IPaJdl8RxBgNTYu6Q3YauLQ==
 
 xterm-addon-unicode11@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/xterm-addon-unicode11/-/xterm-addon-unicode11-0.1.1.tgz#b209ef137db38096f68636af4ef4d0c0acba85ad"
   integrity sha512-z6vJTL+dpNljwAYzYoyDjJP8A2XjZuEosl0sRa+FGRf3jEyEVWquDM53MfUd1ztVdAPQ839qR6eYK1BXV04Bhw==
 
-xterm-addon-webgl@^0.5.0-beta.7:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.5.0.tgz#c1031dc7599cce3509824643ab5f15361c928e3e"
-  integrity sha512-hQrvabKCnwXFaEZ+YtoJM9Pm0CIBXL5KSwoU+RiGStU3KYTAcqYP2GsH3dWdvKX6kTWhWLS81dtDsGkfbOciuA==
+xterm-addon-webgl@^0.6.0-beta.2:
+  version "0.6.0-beta.2"
+  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.6.0-beta.2.tgz#00cb4e17db0bfd4de59c4d1ce9a2d1b533111c81"
+  integrity sha512-vFDk8/YkzSITGxWPxtfCGqrlY89YD/UZwZHl5lxL5B9gLlzueGgZxQfKEIUcFSqMPxBnTOf9aueGYBDRap3AbA==
 
 xterm@^4.4.0-beta.15:
   version "4.4.0"
