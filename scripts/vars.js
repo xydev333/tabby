@@ -21,7 +21,6 @@ exports.builtinPlugins = [
   'terminus-community-color-schemes',
   'terminus-plugin-manager',
   'terminus-ssh',
-  'terminus-serial',
 ]
 exports.bundledModules = [
   '@angular',
