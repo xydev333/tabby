@@ -16,7 +16,7 @@ export class SSHModalComponent {
     connections: SSHConnection[]
     childFolders: SSHConnectionGroup[]
     quickTarget: string
-    recentConnections: SSHConnection[]
+    lastConnection: SSHConnection|null = null
     childGroups: SSHConnectionGroup[]
     groupCollapsed: {[id: string]: boolean} = {}
 
@@ -30,7 +30,9 @@ export class SSHModalComponent {
 
     ngOnInit () {
         this.connections = this.config.store.ssh.connections
-        this.recentConnections = this.config.store.ssh.recentConnections
+        if (window.localStorage.lastConnection) {
+            this.lastConnection = JSON.parse(window.localStorage.lastConnection)
+        }
         this.refresh()
     }
 
@@ -53,21 +55,13 @@ export class SSHModalComponent {
             user,
             port,
         }
-        this.recentConnections.unshift(connection)
-        if (this.recentConnections.length > 5) {
-            this.recentConnections.pop()
-        }
-        this.config.store.ssh.recentConnections = this.recentConnections
-        this.config.save()
+        window.localStorage.lastConnection = JSON.stringify(connection)
         this.connect(connection)
     }
 
-    clearConnection (connection) {
-        this.recentConnections = this.recentConnections.filter(function (el) {
-            return el === connection
-        })
-        this.config.store.ssh.recentConnections = this.recentConnections
-        this.config.save()
+    clearLastConnection () {
+        window.localStorage.lastConnection = null
+        this.lastConnection = null
     }
 
     async connect (connection: SSHConnection) {

@@ -5,7 +5,6 @@ export class SSHConfigProvider extends ConfigProvider {
     defaults = {
         ssh: {
             connections: [],
-            recentConnections: [],
             options: {
             },
         },
