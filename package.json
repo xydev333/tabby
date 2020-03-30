@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
-    "@sentry/cli": "^1.52.1",
+    "@sentry/cli": "^1.51.1",
     "@sentry/electron": "^1.2.1",
     "@types/electron-config": "^3.2.2",
     "@types/electron-debug": "^2.1.0",
@@ -22,7 +22,7 @@
     "electron-notarize": "^0.1.1",
     "electron-rebuild": "^1.10.1",
     "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-import": "^2.20.2",
     "file-loader": "^5.0.2",
     "graceful-fs": "^4.2.2",
     "html-loader": "0.5.5",
@@ -52,7 +52,7 @@
     "val-loader": "2.1.0",
     "webpack": "^5.0.0-beta.14",
     "webpack-cli": "^3.3.10",
-    "yaml-loader": "0.5.0"
+    "yaml-loader": "0.6.0"
   },
   "resolutions": {
     "*/node-abi": "^2.14.0"
