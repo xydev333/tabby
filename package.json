@@ -67,6 +67,5 @@
     "lint": "eslint --ext ts */src */lib",
     "postinstall": "node ./scripts/install-deps.js"
   },
-  "repository": "eugeny/terminus",
-  "license": "MIT"
+  "repository": "eugeny/terminus"
 }
