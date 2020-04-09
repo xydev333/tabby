@@ -15,7 +15,7 @@
     "core-js": "^3.6.4",
     "cross-env": "7.0.2",
     "css-loader": "3.4.2",
-    "electron": "^8.2.0",
+    "electron": "^8.2.1",
     "electron-builder": "22.4.1",
     "electron-download": "^4.1.1",
     "electron-installer-snap": "^5.0.0",
@@ -67,5 +67,7 @@
     "lint": "eslint --ext ts */src */lib",
     "postinstall": "node ./scripts/install-deps.js"
   },
-  "repository": "eugeny/terminus"
+  "repository": "eugeny/terminus",
+  "author": "Eugene Pankov",
+  "license": "MIT"
 }
