@@ -103,12 +103,6 @@ export class Window {
             }
         })
 
-        this.window.on('blur',() => {
-            if (this.configStore.appearance?.dockHideOnBlur) {
-                this.hide()
-            }
-        })
-
         this.window.loadURL(`file://${app.getAppPath()}/dist/index.html?${this.window.id}`, { extraHeaders: 'pragma: no-cache\n' })
 
         if (process.platform !== 'darwin') {
@@ -199,8 +193,13 @@ export class Window {
                     this.window.focus()
                 })
             } else {
-                // docked, visible
-                this.window.hide()
+                if (this.configStore.appearance?.dockAlwaysOnTop) {
+                    // docked, visible, on top
+                    this.window.hide()
+                } else {
+                    // docked, visible, not on top
+                    this.window.focus()
+                }
             }
         }
     }
