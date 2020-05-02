@@ -28,7 +28,7 @@
     "electron-updater": "^4.3.1",
     "fontmanager-redux": "0.4.0",
     "js-yaml": "3.13.1",
-    "keytar": "^5.5.0",
+    "keytar": "^5.6.0",
     "mz": "^2.7.0",
     "ngx-toastr": "^12.0.1",
     "node-pty": "^0.10.0-beta8",
@@ -50,6 +50,6 @@
   "devDependencies": {
     "@types/mz": "0.0.32",
     "@types/node": "12.7.12",
-    "node-abi": "^2.15.0"
+    "node-abi": "^2.16.0"
   }
 }
