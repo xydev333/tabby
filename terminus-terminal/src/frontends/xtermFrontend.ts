@@ -40,6 +40,7 @@ export class XTermFrontend extends Frontend {
         super()
         this.xterm = new Terminal({
             allowTransparency: true,
+            windowsMode: process.platform === 'win32',
         })
         this.xtermCore = (this.xterm as any)._core
 
@@ -167,28 +168,15 @@ export class XTermFrontend extends Frontend {
     }
 
     copySelection (): void {
-        let text = this.getSelection()
-        let lines = text.split('\n')
-        if (lines.some(x => x.length === this.xterm.cols)) {
-            text = ''
-            let lastLineWraps = false
-            for (let line of lines) {
-                if (!lastLineWraps) {
-                    text += '\n'
-                }
-                text += line
-                lastLineWraps = line.length === this.xterm.cols
-            }
-        }
-
+        const text = this.getSelection()
         if (text.length < 1024 * 32) {
             require('electron').remote.clipboard.write({
-                text: text,
+                text: this.getSelection(),
                 html: this.getSelectionAsHTML(),
             })
         } else {
             require('electron').remote.clipboard.write({
-                text: text,
+                text: this.getSelection(),
             })
         }
     }
