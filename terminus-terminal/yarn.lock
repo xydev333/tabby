@@ -230,17 +230,17 @@ xterm-addon-fit@^0.4.0-beta.8:
   integrity sha512-gFfMQ9TeCELggiANB+z3y3rpleOK0Fc59rwJDbBRRVaMNGJW3Xedl5Ne6xJ+vqkqugYq66vl4CwrMRYylyq5IQ==
 
 xterm-addon-ligatures@^0.3.0-beta.1:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/xterm-addon-ligatures/-/xterm-addon-ligatures-0.3.0.tgz#c7e67bf7ac669b0b6a06ad99fff0003890efe0a3"
-  integrity sha512-fNq+qYF1jiTUqzYAEqR7RruOfDwWMiLCJxlT/U8L6ttCvNRhbMQpHVcXEM5YCcxsB+Nj+GDv4Vap4KrfWEUmfA==
+  version "0.3.0-beta.1"
+  resolved "https://registry.yarnpkg.com/xterm-addon-ligatures/-/xterm-addon-ligatures-0.3.0-beta.1.tgz#884a80e5e064391b6d2996d23e4861d835fbfce9"
+  integrity sha512-xD0jvtqAKK7RW+dxdqEenVnxN0Tum3F8lKYG2ncPlpEDnfmF5DQDiM502maDxwVUPg4/PB3+MdTSg6QCRjOgTg==
   dependencies:
     font-finder "^1.0.4"
     font-ligatures "^1.3.2"
 
 xterm-addon-search@^0.7.0-beta.1:
-  version "0.7.0-beta.2"
-  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.7.0-beta.2.tgz#384bda136c707f97a77eefc76cc7d9e572ce0719"
-  integrity sha512-A9fyiBBvG6ZNIwSJ03+sRCv9y20/uzd1wjCoaYUqp9fu3YGiHaGwyo9rAfm2M/fQM5vBmyJk4Qw/lwVq7TtlAw==
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-search/-/xterm-addon-search-0.7.0.tgz#c929d3e5cbb335e82bff72f158ea82936d9cd4ef"
+  integrity sha512-6060evmJJ+tZcjnx33FXaeEHLpuXEa7l9UzUsYfMlCKbu88AbE+5LJocTKCHYd71cwCwb9pjmv/G1o9Rf9Zbcg==
 
 xterm-addon-serialize@^0.3.0-beta.3:
   version "0.3.0-beta.4"
