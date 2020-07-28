@@ -2,7 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@sentry/cli": "^1.52.3",
-    "@sentry/electron": "^1.2.1",
+    "@sentry/electron": "^1.5.1",
     "@types/electron-config": "^3.2.2",
     "@types/electron-debug": "^2.1.0",
     "@types/js-yaml": "^3.12.4",
@@ -51,7 +51,7 @@
     "url-loader": "^3.0.0",
     "val-loader": "2.1.1",
     "webpack": "^5.0.0-beta.18",
-    "webpack-cli": "^3.3.10",
+    "webpack-cli": "^3.3.12",
     "yaml-loader": "0.6.0"
   },
   "resolutions": {
