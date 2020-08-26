@@ -65,7 +65,7 @@ module.exports = {
         'path',
         'macos-native-processlist',
         'windows-native-registry',
-        '@terminus-term/node-pty',
+        'node-pty',
         'windows-process-tree',
         'os',
         /^rxjs/,
