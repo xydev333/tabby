@@ -65,7 +65,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             recoverTabs: true,
             warnOnMultilinePaste: true,
             showDefaultProfiles: true,
-            searchRegexAlwaysEnabled: false,
         },
     }
 
