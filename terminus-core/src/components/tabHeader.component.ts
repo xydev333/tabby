@@ -9,7 +9,6 @@ import { HotkeysService } from '../services/hotkeys.service'
 import { ElectronService } from '../services/electron.service'
 import { AppService } from '../services/app.service'
 import { HostAppService, Platform } from '../services/hostApp.service'
-import { ConfigService } from '../services/config.service'
 
 /** @hidden */
 export interface SortableComponentProxy {
@@ -32,7 +31,6 @@ export class TabHeaderComponent {
 
     private constructor (
         public app: AppService,
-        public config: ConfigService,
         private electron: ElectronService,
         private hostApp: HostAppService,
         private ngbModal: NgbModal,
