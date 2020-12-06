@@ -23,6 +23,8 @@ export class TerminalConfigProvider extends ConfigProvider {
             ligatures: false,
             cursor: 'block',
             cursorBlink: true,
+            hideTabIndex: false,
+            hideCloseButton: false,
             customShell: '',
             rightClick: 'menu',
             pasteOnMiddleClick: true,
