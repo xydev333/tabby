@@ -13,12 +13,7 @@ $tabs-height: 38px;
 
     overflow: hidden;
 
-    &.vertical {
-      flex: none;
-      height: $tabs-height;
-    }
-
-    .index {
+    .index {        
         flex: none;
         font-weight: bold;
         -webkit-app-region: no-drag;
