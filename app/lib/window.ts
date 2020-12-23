@@ -51,11 +51,12 @@ export class Window {
             height: 600,
             title: 'Terminus',
             minWidth: 400,
-            minHeight: 300,
+            minHeight: 300,   
             webPreferences: {
                 nodeIntegration: true,
                 preload: path.join(__dirname, 'sentry.js'),
                 backgroundThrottling: false,
+                enableRemoteModule: true,
             },
             frame: false,
             show: false,
@@ -211,9 +212,7 @@ export class Window {
     }
 
     handleSecondInstance (argv: string[], cwd: string): void {
-        if (!this.configStore.appearance?.dock) {
-            this.send('host:second-instance', parseArgs(argv, cwd), cwd)
-        }
+        this.send('host:second-instance', parseArgs(argv, cwd), cwd)
     }
 
     private setupWindowManagement () {
