@@ -41,13 +41,11 @@ export interface SSHConnection {
     jumpHost?: string
     agentForward?: boolean
     warnOnClose?: boolean
-    algorithms?: Record<string, string[]>
+    algorithms?: {[t: string]: string[]}
 }
 
 export enum PortForwardType {
-    Local = 'Local',
-    Remote = 'Remote',
-    Dynamic = 'Dynamic',
+    Local, Remote, Dynamic,
 }
 
 export class ForwardedPort {

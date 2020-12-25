@@ -33,5 +33,5 @@ export abstract class ConfigProvider {
      * }
      * ```
      */
-    platformDefaults: Record<string, any> = {}
+    platformDefaults: {[platform: string]: any} = {}
 }

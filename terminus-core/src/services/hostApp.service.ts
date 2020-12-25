@@ -8,9 +8,7 @@ import { Logger, LogService } from './log.service'
 import { isWindowsBuild, WIN_BUILD_FLUENT_BG_MOVE_BUG_FIXED, WIN_BUILD_FLUENT_BG_SUPPORTED } from '../utils'
 
 export enum Platform {
-    Linux = 'Linux',
-    macOS = 'macOS',
-    Windows = 'Windows',
+    Linux, macOS, Windows,
 }
 
 export interface Bounds {
@@ -260,7 +258,7 @@ export class HostAppService {
     /**
      * Notifies other windows of config file changes
      */
-    broadcastConfigChange (configStore: Record<string, any>): void {
+    broadcastConfigChange (configStore: {[k: string]: any}): void {
         this.electron.ipcRenderer.send('app:config-change', configStore)
     }
 

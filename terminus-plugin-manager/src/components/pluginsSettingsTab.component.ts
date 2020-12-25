@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core'
 import { ConfigService, ElectronService } from 'terminus-core'
 import { PluginInfo, PluginManagerService } from '../services/pluginManager.service'
 
-enum BusyState { Installing = 'Installing', Uninstalling = 'Uninstalling' }
+enum BusyState { Installing, Uninstalling }
 
 /** @hidden */
 @Component({
@@ -19,8 +19,8 @@ export class PluginsSettingsTabComponent {
     @Input() availablePlugins$: Observable<PluginInfo[]>
     @Input() availablePluginsQuery$ = new BehaviorSubject<string>('')
     @Input() availablePluginsReady = false
-    @Input() knownUpgrades: Record<string, PluginInfo|null> = {}
-    @Input() busy: Record<string, BusyState> = {}
+    @Input() knownUpgrades: {[id: string]: PluginInfo|null} = {}
+    @Input() busy: {[id: string]: BusyState} = {}
     @Input() erroredPlugin: string
     @Input() errorMessage: string
 
