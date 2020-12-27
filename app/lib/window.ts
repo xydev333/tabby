@@ -22,16 +22,11 @@ export interface WindowOptions {
     hidden?: boolean
 }
 
-abstract class GlasstronWindow extends BrowserWindow {
-    blurType: string
-    abstract setBlur (_: boolean)
-}
-
 export class Window {
     ready: Promise<void>
     private visible = new Subject<boolean>()
     private closed = new Subject<void>()
-    private window: GlasstronWindow
+    private window: BrowserWindow
     private windowConfig: ElectronConfig
     private windowBounds: Rectangle
     private closing = false
@@ -89,7 +84,7 @@ export class Window {
             }
         }
 
-        this.window = new glasstron.BrowserWindow(bwOptions)
+        this.window = new BrowserWindow(bwOptions)
 
         this.window.once('ready-to-show', () => {
             if (process.platform === 'darwin') {
@@ -134,20 +129,21 @@ export class Window {
         })
     }
 
-    setVibrancy (enabled: boolean, type?: string, userRequested?: boolean): void {
-        if (userRequested ?? true) {
-            this.lastVibrancy = { enabled, type }
-        }
+    setVibrancy (enabled: boolean, type?: string): void {
+        this.lastVibrancy = { enabled, type }
         if (process.platform === 'win32') {
             if (parseFloat(os.release()) >= 10) {
-                this.window.blurType = enabled ? type === 'fluent' ? 'acrylic' : 'blurbehind' : null
-                this.window.setBlur(enabled)
+                glasstron.update(this.window, {
+                    windows: { blurType: enabled ? type === 'fluent' ? 'acrylic' : 'blurbehind' : null },
+                })
             } else {
                 DwmEnableBlurBehindWindow(this.window, enabled)
             }
         } else if (process.platform === 'linux') {
+            glasstron.update(this.window, {
+                linux: { requestBlur: enabled },
+            })
             this.window.setBackgroundColor(enabled ? '#00000000' : '#131d27')
-            this.window.setBlur(enabled)
         } else {
             this.window.setVibrancy(enabled ? 'dark' : null as any) // electron issue 20269
         }
@@ -364,21 +360,24 @@ export class Window {
             this.disableVibrancyWhileDragging = value
         })
 
-        let moveEndedTimeout: number|null = null
-        const onBoundsChange = () => {
+        this.window.on('will-move', () => {
             if (!this.lastVibrancy?.enabled || !this.disableVibrancyWhileDragging) {
                 return
             }
-            this.setVibrancy(false, undefined, false)
-            if (moveEndedTimeout) {
-                clearTimeout(moveEndedTimeout)
+            let timeout: number|null = null
+            const oldVibrancy = this.lastVibrancy
+            this.setVibrancy(false)
+            const onMove = () => {
+                if (timeout) {
+                    clearTimeout(timeout)
+                }
+                timeout = setTimeout(() => {
+                    this.window.off('move', onMove)
+                    this.setVibrancy(oldVibrancy.enabled, oldVibrancy.type)
+                }, 500)
             }
-            moveEndedTimeout = setTimeout(() => {
-                this.setVibrancy(this.lastVibrancy.enabled, this.lastVibrancy.type)
-            }, 50)
-        }
-        this.window.on('move', onBoundsChange)
-        this.window.on('resize', onBoundsChange)
+            this.window.on('move', onMove)
+        })
     }
 
     private destroy () {

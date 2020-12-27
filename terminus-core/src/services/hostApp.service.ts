@@ -5,10 +5,12 @@ import { Observable, Subject } from 'rxjs'
 import { Injectable, NgZone, EventEmitter } from '@angular/core'
 import { ElectronService } from './electron.service'
 import { Logger, LogService } from './log.service'
-import { isWindowsBuild, WIN_BUILD_FLUENT_BG_SUPPORTED } from '../utils'
+import { isWindowsBuild, WIN_BUILD_FLUENT_BG_MOVE_BUG_FIXED, WIN_BUILD_FLUENT_BG_SUPPORTED } from '../utils'
 
 export enum Platform {
-    Linux, macOS, Windows,
+    Linux = 'Linux',
+    macOS = 'macOS',
+    Windows = 'Windows',
 }
 
 export interface Bounds {
@@ -174,7 +176,10 @@ export class HostAppService {
             this.configChangeBroadcast.next()
         }))
 
-        if (isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
+        if (
+            isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED) &&
+            !isWindowsBuild(WIN_BUILD_FLUENT_BG_MOVE_BUG_FIXED)
+        ) {
             electron.ipcRenderer.send('window-set-disable-vibrancy-while-dragging', true)
         }
     }
@@ -255,7 +260,7 @@ export class HostAppService {
     /**
      * Notifies other windows of config file changes
      */
-    broadcastConfigChange (configStore: {[k: string]: any}): void {
+    broadcastConfigChange (configStore: Record<string, any>): void {
         this.electron.ipcRenderer.send('app:config-change', configStore)
     }
 
