@@ -75,7 +75,7 @@ export class Application {
     }
 
     onGlobalHotkey (): void {
-        if (this.windows.some(x => x.isFocused())) {
+        if (this.windows.some(x => x.isFocused() && x.isVisible())) {
             for (const window of this.windows) {
                 window.hide()
             }
@@ -147,7 +147,7 @@ export class Application {
 
     handleSecondInstance (argv: string[], cwd: string): void {
         this.presentAllWindows()
-        this.windows[this.windows.length - 1].passCliArguments(argv, cwd, true)
+        this.windows[this.windows.length - 1].handleSecondInstance(argv, cwd)
     }
 
     private setupMenu () {

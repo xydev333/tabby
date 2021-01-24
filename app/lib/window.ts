@@ -65,7 +65,6 @@ export class Window {
                 enableRemoteModule: true,
                 contextIsolation: false,
             },
-            maximizable: true,
             frame: false,
             show: false,
             backgroundColor: '#00000000',
@@ -191,6 +190,10 @@ export class Window {
         return this.window.isFocused()
     }
 
+    isVisible (): boolean {
+        return this.window.isVisible()
+    }
+
     hide (): void {
         if (process.platform === 'darwin') {
             // Lose focus
@@ -226,8 +229,8 @@ export class Window {
         }
     }
 
-    passCliArguments (argv: string[], cwd: string, secondInstance: boolean): void {
-        this.send('cli', parseArgs(argv, cwd), cwd, secondInstance)
+    handleSecondInstance (argv: string[], cwd: string): void {
+        this.send('host:second-instance', parseArgs(argv, cwd), cwd)
     }
 
     private setupWindowManagement () {
