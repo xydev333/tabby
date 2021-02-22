@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as yaml from 'js-yaml'
-import { debounce } from 'utils-decorators/dist/cjs'
 import { Subscription } from 'rxjs'
 import { Component, Inject, Input, HostBinding, NgZone } from '@angular/core'
 import {
@@ -103,14 +102,6 @@ export class SettingsTabComponent extends BaseTabComponent {
 
     restartApp () {
         this.hostApp.relaunch()
-    }
-
-    @debounce(500)
-    saveConfiguration (requireRestart?: boolean) {
-        this.config.save()
-        if (requireRestart) {
-            this.config.requestRestart()
-        }
     }
 
     saveConfigFile () {

@@ -25,7 +25,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .title Theme
                 select.form-control(
                     [(ngModel)]='config.store.appearance.theme',
-                    (ngModelChange)='saveConfiguration()',
+                    (ngModelChange)='config.save()',
                 )
                     option(*ngFor='let theme of themes', [ngValue]='theme.name') {{theme.name}}
 
@@ -34,7 +34,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .title Tabs location
                 .btn-group(
                     [(ngModel)]='config.store.appearance.tabsLocation',
-                    (ngModelChange)='saveConfiguration()',
+                    (ngModelChange)='config.save()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -71,7 +71,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .title Tabs width
                 .btn-group(
                     [(ngModel)]='config.store.appearance.flexTabs',
-                    (ngModelChange)='saveConfiguration()',
+                    (ngModelChange)='config.save()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -97,7 +97,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
 
                 toggle(
                     [(ngModel)]='config.store.appearance.vibrancy',
-                    (ngModelChange)='saveConfiguration()'
+                    (ngModelChange)='config.save()'
                 )
 
             .form-line(*ngIf='config.store.appearance.vibrancy && isFluentVibrancySupported')
@@ -105,7 +105,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .title Background type
                 .btn-group(
                     [(ngModel)]='config.store.appearance.vibrancyType',
-                    (ngModelChange)='saveConfiguration()',
+                    (ngModelChange)='config.save()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -129,7 +129,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                 input(
                     type='range',
                     [(ngModel)]='config.store.appearance.opacity',
-                    (ngModelChange)='saveConfiguration(); (hostApp.platform === Platform.Linux && config.requestRestart())',
+                    (ngModelChange)='config.save(); (hostApp.platform === Platform.Linux && config.requestRestart())',
                     min='0.4',
                     max='1',
                     step='0.01'
@@ -148,7 +148,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
 
                 .btn-group(
                     [(ngModel)]='config.store.appearance.frame',
-                    (ngModelChange)='saveConfiguration(true)',
+                    (ngModelChange)='config.save(); config.requestRestart()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -180,7 +180,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
 
                 .btn-group(
                     [(ngModel)]='config.store.appearance.dock',
-                    (ngModelChange)='saveConfiguration(); docking.dock()',
+                    (ngModelChange)='config.save(); docking.dock()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -226,7 +226,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
 
                 div(
                     [(ngModel)]='config.store.appearance.dockScreen',
-                    (ngModelChange)='saveConfiguration(); docking.dock()',
+                    (ngModelChange)='config.save(); docking.dock()',
                     ngbRadioGroup
                 )
                     label.btn.btn-secondary(ngbButtonLabel)
@@ -250,7 +250,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .description Keep docked terminal always on top
                 toggle(
                     [(ngModel)]='config.store.appearance.dockAlwaysOnTop',
-                    (ngModelChange)='saveConfiguration(); docking.dock()',
+                    (ngModelChange)='config.save(); docking.dock()',
                 )
 
             .form-line(*ngIf='config.store.appearance.dock != "off"')
@@ -259,7 +259,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                 input(
                     type='range',
                     [(ngModel)]='config.store.appearance.dockFill',
-                    (mouseup)='saveConfiguration(); docking.dock()',
+                    (mouseup)='config.save(); docking.dock()',
                     min='0.05',
                     max='1',
                     step='0.01'
@@ -271,7 +271,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .description Hides the docked terminal when you click away.
                 toggle(
                     [(ngModel)]='config.store.appearance.dockHideOnBlur',
-                    (ngModelChange)='saveConfiguration(); ',
+                    (ngModelChange)='config.save(); ',
                 )
 
             .form-line
@@ -288,21 +288,21 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     .description We're only tracking your Terminus and OS versions.
                 toggle(
                     [(ngModel)]='config.store.enableAnalytics',
-                    (ngModelChange)='saveConfiguration(true)',
+                    (ngModelChange)='config.save(); config.requestRestart()',
                 )
 
             .form-line
                 .header
                     .title Automatic Updates
                     .description Enable automatic installation of updates when they become available.
-                toggle([(ngModel)]='config.store.enableAutomaticUpdates', (ngModelChange)='saveConfiguration()')
+                toggle([(ngModel)]='config.store.enableAutomaticUpdates', (ngModelChange)='config.save()')
 
             .form-line
                 .header
                     .title Custom CSS
                 textarea.form-control(
                     [(ngModel)]='config.store.appearance.css',
-                    (ngModelChange)='saveConfiguration()',
+                    (ngModelChange)='config.save()',
                 )
 
     ngb-tab(id='hotkeys')
@@ -331,7 +331,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                             td.pr-5
                                 multi-hotkey-input(
                                     [model]='getHotkey(hotkey.id) || []',
-                                    (modelChange)='setHotkey(hotkey.id, $event); saveConfiguration(); docking.dock()'
+                                    (modelChange)='setHotkey(hotkey.id, $event); config.save(); docking.dock()'
                                 )
 
     ngb-tab(*ngFor='let provider of settingsProviders', [id]='provider.id')
