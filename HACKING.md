@@ -10,25 +10,27 @@ First, install the dependencies:
 
 ```
 # macOS/Linux:
-yarn
+npm install
+./scripts/install-deps.js
 ./scripts/build-native.js
 
 # Windows:
 npm -g install windows-build-tools
-yarn
+npm install
+node scripts\install-deps.js
 node scripts\build-native.js
 ```
 
 Now, check if your build is working:
 
 ```
-yarn run build
+npm run build
 ```
 
 Start Terminus with
 
 ```
-yarn start
+npm start
 ```
 
 # Project layout
