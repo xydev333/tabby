@@ -6,20 +6,19 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
             i.fas.fa-fw.fa-window-maximize.mr-2
             | Application
         ng-template(ngbTabContent)
-            .d-flex.align-items-center.flex-wrap.mb-4
+            .d-flex.align-items-center.mb-4
                 h1.terminus-title.mb-2.mr-2 Terminus
                     sup α
 
                 .text-muted.mr-auto {{homeBase.appVersion}}
 
-                div
-                    button.btn.btn-secondary.mr-3((click)='homeBase.openGitHub()')
-                        i.fab.fa-github
-                        span GitHub
+                button.btn.btn-secondary.mr-3((click)='homeBase.openGitHub()')
+                    i.fab.fa-github
+                    span GitHub
 
-                    button.btn.btn-secondary((click)='homeBase.reportBug()')
-                        i.fas.fa-bug
-                        span Report a problem
+                button.btn.btn-secondary((click)='homeBase.reportBug()')
+                    i.fas.fa-bug
+                    span Report a problem
 
             .form-line
                 .header
@@ -220,7 +219,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                         )
                         | Bottom
 
-            .ml-5.form-line(*ngIf='config.store.appearance.dock != "off"')
+            .form-line(*ngIf='config.store.appearance.dock != "off"')
                 .header
                     .title Display on
                     .description Snaps the window to a side of the screen
@@ -245,7 +244,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                         )
                         | {{screen.name}}
 
-            .ml-5.form-line(*ngIf='config.store.appearance.dock != "off"')
+            .form-line(*ngIf='config.store.appearance.dock != "off"')
                 .header
                     .title Dock always on top
                     .description Keep docked terminal always on top
@@ -254,7 +253,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     (ngModelChange)='saveConfiguration(); docking.dock()',
                 )
 
-            .ml-5.form-line(*ngIf='config.store.appearance.dock != "off"')
+            .form-line(*ngIf='config.store.appearance.dock != "off"')
                 .header
                     .title Docked terminal size
                 input(
@@ -266,19 +265,7 @@ ngb-tabset.vertical(type='pills', [activeId]='activeTab')
                     step='0.01'
                 )
 
-            .ml-5.form-line(*ngIf='config.store.appearance.dock != "off"')
-                .header
-                    .title Docked terminal space
-                input(
-                    type='range',
-                    [(ngModel)]='config.store.appearance.dockSpace',
-                    (mouseup)='saveConfiguration(); docking.dock()',
-                    min='0.2',
-                    max='1',
-                    step='0.01'
-                )
-
-            .ml-5.form-line(*ngIf='config.store.appearance.dock != "off"')
+            .form-line(*ngIf='config.store.appearance.dock != "off"')
                 .header
                     .title Hide dock on blur
                     .description Hides the docked terminal when you click away.

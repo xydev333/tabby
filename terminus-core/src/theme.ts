@@ -15,8 +15,6 @@ export class StandardCompactTheme extends Theme {
     name = 'Compact'
     css = require('./theme.compact.scss')
     terminalBackground = '#222a33'
-    macOSWindowButtonsInsetX = 8
-    macOSWindowButtonsInsetY = 12
 }
 
 /** @hidden */

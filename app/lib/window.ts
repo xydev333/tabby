@@ -88,7 +88,7 @@ export class Window {
             bwOptions.frame = true
         } else {
             if (process.platform === 'darwin') {
-                bwOptions.titleBarStyle = 'hidden'
+                bwOptions.titleBarStyle = 'hiddenInset'
             }
         }
 
