@@ -2,7 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@sentry/cli": "^1.63.0",
-    "@sentry/electron": "^2.2.0",
+    "@sentry/electron": "^2.4.0",
     "@terminus-term/to-string-loader": "1.1.7-beta.1",
     "@types/electron-config": "^3.2.2",
     "@types/electron-debug": "^2.1.0",
@@ -38,7 +38,7 @@
     "npmlog": "4.1.2",
     "npx": "^10.2.2",
     "patch-package": "^6.2.2",
-    "pug": "^3.0.2",
+    "pug": "^3.0.1",
     "pug-html-loader": "1.1.5",
     "pug-lint": "^2.6.0",
     "pug-loader": "^2.4.0",
