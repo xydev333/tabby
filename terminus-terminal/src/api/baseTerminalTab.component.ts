@@ -90,7 +90,6 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
 
     protected logger: Logger
     protected output = new Subject<string>()
-    protected sessionChanged = new Subject<BaseSession|null>()
     private sessionCloseSubscription: Subscription
     private hotkeysSubscription: Subscription
     private bellPlayer: HTMLAudioElement
@@ -122,8 +121,6 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
     }
 
     get frontendReady$ (): Observable<void> { return this.frontendReady }
-
-    get sessionChanged$ (): Observable<BaseSession|null> { return this.sessionChanged }
 
     constructor (protected injector: Injector) {
         super()
@@ -584,7 +581,6 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
             this.detachSessionHandlers()
             this.session = null
         }
-        this.sessionChanged.next(session)
     }
 
     protected attachSessionHandler (subscription: Subscription): void {
