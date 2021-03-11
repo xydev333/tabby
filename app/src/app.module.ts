@@ -13,7 +13,7 @@ export function getRootModule (plugins: any[]) {
             positionClass: 'toast-bottom-center',
             toastClass: 'toast',
             preventDuplicates: true,
-            extendedTimeOut: 1000,
+            extendedTimeOut: 5000,
         }),
     ]
     const bootstrap = [

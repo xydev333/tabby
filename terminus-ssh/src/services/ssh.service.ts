@@ -9,7 +9,8 @@ import * as fs from 'mz/fs'
 import { execFile } from 'mz/child_process'
 import * as path from 'path'
 import * as sshpk from 'sshpk'
-import { HostAppService, Platform, Logger, LogService, ElectronService, AppService, SelectorOption, ConfigService, NotificationsService } from 'terminus-core'
+import { ToastrService } from 'ngx-toastr'
+import { HostAppService, Platform, Logger, LogService, ElectronService, AppService, SelectorOption, ConfigService } from 'terminus-core'
 import { SettingsTabComponent } from 'terminus-settings'
 import { ALGORITHM_BLACKLIST, SSHConnection, SSHSession } from '../api'
 import { PromptModalComponent } from '../components/promptModal.component'
@@ -38,7 +39,7 @@ export class SSHService {
         private ngbModal: NgbModal,
         private hostApp: HostAppService,
         private passwordStorage: PasswordStorageService,
-        private notifications: NotificationsService,
+        private toastr: ToastrService,
         private app: AppService,
         private config: ConfigService,
     ) {
@@ -69,7 +70,7 @@ export class SSHService {
                 privateKey = (await fs.readFile(privateKeyPath)).toString()
             } catch (error) {
                 logCallback?.(colors.bgRed.black(' X ') + 'Could not read the private key file')
-                this.notifications.error('Could not read the private key file')
+                this.toastr.error('Could not read the private key file')
             }
 
             if (privateKey) {
@@ -165,7 +166,7 @@ export class SSHService {
                 this.zone.run(() => {
                     if (connected) {
                         // eslint-disable-next-line @typescript-eslint/no-base-to-string
-                        this.notifications.error(error.toString())
+                        this.toastr.error(error.toString())
                     } else {
                         reject(error)
                     }
@@ -288,7 +289,7 @@ export class SSHService {
                     },
                 } as any)
             } catch (e) {
-                this.notifications.error(e.message)
+                this.toastr.error(e.message)
                 return reject(e)
             }
 
@@ -410,7 +411,7 @@ export class SSHService {
 
             return tab
         } catch (error) {
-            this.notifications.error(`Could not connect: ${error}`)
+            this.toastr.error(`Could not connect: ${error}`)
             throw error
         }
     }

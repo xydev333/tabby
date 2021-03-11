@@ -104,10 +104,6 @@ export class TerminalService {
         if (profile.color) {
             (this.app.getParentTab(tab) ?? tab).color = profile.color
         }
-        if (profile.disableDynamicTitle) {
-            tab.enableDynamicTitle = false
-            tab.setTitle(profile.name)
-        }
         return tab
     }
 
