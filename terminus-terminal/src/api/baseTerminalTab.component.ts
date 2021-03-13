@@ -1,11 +1,10 @@
 import type { MenuItemConstructorOptions } from 'electron'
 import { Observable, Subject, Subscription } from 'rxjs'
 import { first } from 'rxjs/operators'
-import { ToastrService } from 'ngx-toastr'
 import colors from 'ansi-colors'
 import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, Input, ElementRef, InjectFlags } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
-import { AppService, ConfigService, BaseTabComponent, ElectronService, HostAppService, HotkeysService, Platform, LogService, Logger, TabContextMenuItemProvider, SplitTabComponent } from 'terminus-core'
+import { AppService, ConfigService, BaseTabComponent, ElectronService, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, TabContextMenuItemProvider, SplitTabComponent } from 'terminus-core'
 
 import { BaseSession, SessionsService } from '../services/sessions.service'
 import { TerminalFrontendService } from '../services/terminalFrontend.service'
@@ -15,11 +14,6 @@ import { ResizeEvent } from './interfaces'
 import { TerminalDecorator } from './decorator'
 
 
-/** @hidden */
-export interface ToastrServiceProxy {
-    info: (_: string) => void
-    error: (_: string) => void
-}
 /**
  * A class to base your custom terminal tabs on
  */
@@ -82,7 +76,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
     protected sessions: SessionsService
     protected electron: ElectronService
     protected terminalContainersService: TerminalFrontendService
-    protected toastr: ToastrServiceProxy
+    protected notifications: NotificationsService
     protected log: LogService
     protected decorators: TerminalDecorator[] = []
     protected contextMenuProviders: TabContextMenuItemProvider[]
@@ -90,6 +84,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
 
     protected logger: Logger
     protected output = new Subject<string>()
+    protected sessionChanged = new Subject<BaseSession|null>()
     private sessionCloseSubscription: Subscription
     private hotkeysSubscription: Subscription
     private bellPlayer: HTMLAudioElement
@@ -122,6 +117,8 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
 
     get frontendReady$ (): Observable<void> { return this.frontendReady }
 
+    get sessionChanged$ (): Observable<BaseSession|null> { return this.sessionChanged }
+
     constructor (protected injector: Injector) {
         super()
 
@@ -134,7 +131,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
         this.sessions = injector.get(SessionsService)
         this.electron = injector.get(ElectronService)
         this.terminalContainersService = injector.get(TerminalFrontendService)
-        this.toastr = injector.get(ToastrService)
+        this.notifications = injector.get(NotificationsService)
         this.log = injector.get(LogService)
         this.decorators = injector.get<any>(TerminalDecorator, null, InjectFlags.Optional) as TerminalDecorator[]
         this.contextMenuProviders = injector.get<any>(TabContextMenuItemProvider, null, InjectFlags.Optional) as TabContextMenuItemProvider[]
@@ -151,7 +148,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
                     if (this.frontend?.getSelection()) {
                         this.frontend.copySelection()
                         this.frontend.clearSelection()
-                        this.toastr.info('Copied')
+                        this.notifications.notice('Copied')
                     } else {
                         this.sendInput('\x03')
                     }
@@ -159,7 +156,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
                 case 'copy':
                     this.frontend?.copySelection()
                     this.frontend?.clearSelection()
-                    this.toastr.info('Copied')
+                    this.notifications.notice('Copied')
                     break
                 case 'paste':
                     this.paste()
@@ -451,9 +448,9 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
         }
         if (cwd) {
             this.electron.clipboard.writeText(cwd)
-            this.toastr.info('Copied')
+            this.notifications.notice('Copied')
         } else {
-            this.toastr.error('Shell does not support current path detection')
+            this.notifications.error('Shell does not support current path detection')
         }
     }
 
@@ -581,6 +578,7 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
             this.detachSessionHandlers()
             this.session = null
         }
+        this.sessionChanged.next(session)
     }
 
     protected attachSessionHandler (subscription: Subscription): void {
