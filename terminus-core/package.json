@@ -28,10 +28,10 @@
     "deepmerge": "^4.1.1",
     "electron-updater": "^4.0.6",
     "js-yaml": "^4.0.0",
-    "mixpanel": "^0.10.2",
+    "mixpanel": "^0.13.0",
     "ng2-dnd": "^5.0.2",
     "ngx-perfect-scrollbar": "^10.1.0",
-    "readable-stream": "2.3.7",
+    "readable-stream": "3.6.0",
     "shell-escape": "^0.2.0",
     "uuid": "^8.0.0",
     "winston": "^3.3.3"
