@@ -29,8 +29,8 @@
     "electron-promise-ipc": "^2.2.4",
     "fontmanager-redux": "1.0.0",
     "glasstron": "0.0.7",
-    "js-yaml": "4.1.0",
-    "keytar": "^7.7.0",
+    "js-yaml": "4.0.0",
+    "keytar": "^7.6.0",
     "mz": "^2.7.0",
     "native-process-working-directory": "^1.0.2",
     "ngx-toastr": "^13.2.1",
@@ -51,7 +51,7 @@
   "devDependencies": {
     "@types/mz": "2.7.3",
     "@types/node": "14.14.35",
-    "node-abi": "^2.26.0",
+    "node-abi": "^2.21.0",
     "source-map-support": "^0.5.19"
   },
   "peerDependencies": {
