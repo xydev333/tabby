@@ -46,7 +46,7 @@
     "raw-loader": "4.0.2",
     "sass-loader": "^11.1.1",
     "shelljs": "0.8.4",
-    "source-code-pro": "^2.38.0",
+    "source-code-pro": "^2.30.2",
     "source-sans-pro": "3.6.0",
     "ssh2-streams": "^0.4.10",
     "style-loader": "^2.0.0",
@@ -57,7 +57,7 @@
     "url-loader": "^4.1.1",
     "val-loader": "3.1.0",
     "webpack": "^5.37.0",
-    "webpack-bundle-analyzer": "^4.4.0",
+    "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^4.7.0",
     "yaml-loader": "0.6.0"
   },
