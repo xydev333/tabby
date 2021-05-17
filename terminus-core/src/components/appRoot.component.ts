@@ -142,7 +142,7 @@ export class AppRootComponent {
                     this.updatesAvailable = available
                 })
             }
-        }, 3600 * 12 * 1000)
+        }, 3600 * 12)
 
         this.touchbar.update()
 
