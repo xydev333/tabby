@@ -65,6 +65,9 @@ rules:
   eqeqeq:
   - error
   - smart
+  linebreak-style:
+  - error
+  - unix
   max-depth:
   - 1
   - 5

@@ -1,13 +1,16 @@
+import * as fs from 'fs'
 import { Injectable } from '@angular/core'
 import { TerminalDecorator } from '../api/decorator'
 import { BaseTerminalTabComponent } from '../api/baseTerminalTab.component'
-import { PlatformService } from 'terminus-core'
+import { ElectronService, HostAppService, PlatformService } from 'terminus-core'
 
 /** @hidden */
 @Injectable()
 export class DebugDecorator extends TerminalDecorator {
     constructor (
+        private electron: ElectronService,
         private platform: PlatformService,
+        private hostApp: HostAppService,
     ) {
         super()
     }
@@ -60,21 +63,28 @@ export class DebugDecorator extends TerminalDecorator {
     }
 
     private async loadFile (): Promise<string|null> {
-        const transfer = await this.platform.startUpload()
-        if (!transfer.length) {
-            return null
+        const result = await this.electron.dialog.showOpenDialog(
+            this.hostApp.getWindow(),
+            {
+                buttonLabel: 'Load',
+                properties: ['openFile', 'treatPackageAsDirectory'],
+            },
+        )
+        if (result.filePaths.length) {
+            return fs.readFileSync(result.filePaths[0], { encoding: 'utf-8' })
         }
-        const data = await transfer[0].readAll()
-        transfer[0].close()
-        return data.toString()
+        return null
     }
 
     private async saveFile (content: string, name: string) {
-        const data = Buffer.from(content)
-        const transfer = await this.platform.startDownload(name, data.length)
-        if (transfer) {
-            transfer.write(data)
-            transfer.close()
+        const result = await this.electron.dialog.showSaveDialog(
+            this.hostApp.getWindow(),
+            {
+                defaultPath: name,
+            },
+        )
+        if (result.filePath) {
+            fs.writeFileSync(result.filePath, content)
         }
     }
 
