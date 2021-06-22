@@ -28,10 +28,10 @@ jobs:
       run: node scripts/build-windows.js
       if: github.repository == 'Eugeny/terminus' && github.event_name == 'push'
       env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
         WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-        DEBUG: electron-builder,electron-builder:*
+        # DEBUG: electron-builder,electron-builder:*
 
     - name: Build packages without signing
       run: node scripts/build-windows.js
