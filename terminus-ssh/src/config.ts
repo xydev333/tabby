@@ -8,8 +8,6 @@ export class SSHConfigProvider extends ConfigProvider {
             recentConnections: [],
             warnOnClose: false,
             winSCPPath: null,
-            agentType: 'auto',
-            agentPath: null,
         },
         hotkeys: {
             ssh: [
