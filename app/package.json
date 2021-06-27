@@ -28,7 +28,7 @@
     "electron-config": "2.0.0",
     "electron-debug": "^3.2.0",
     "electron-promise-ipc": "^2.2.4",
-    "fontmanager-redux": "1.0.0",
+    "fontmanager-redux": "1.1.0",
     "glasstron": "0.0.7",
     "js-yaml": "4.1.0",
     "keytar": "^7.7.0",
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@types/mz": "2.7.3",
-    "@types/node": "15.12.1",
+    "@types/node": "15.12.5",
     "ngx-filesize": "^2.0.16",
     "node-abi": "^2.30.0",
     "source-map-support": "^0.5.19"

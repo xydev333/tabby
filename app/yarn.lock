@@ -157,10 +157,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@15.12.1":
-  version "15.12.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.1.tgz#9b60797dee1895383a725f828a869c86c6caa5c2"
-  integrity sha512-zyxJM8I1c9q5sRMtVF+zdd13Jt6RU4r4qfhTd7lQubyThvLfx6yYekWSQjGCGV2Tkecgxnlpl/DNlb6Hg+dmEw==
+"@types/node@*", "@types/node@15.12.5":
+  version "15.12.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.12.5.tgz#9a78318a45d75c9523d2396131bd3cca54b2d185"
+  integrity sha512-se3yX7UHv5Bscf8f1ERKvQOD6sTyycH3hdaoozvaLxgUiY5lIGEeH37AD0G0Qi9kPqihPn0HOfd2yaIEN9VwEg==
 
 JSONStream@^1.3.4, JSONStream@^1.3.5:
   version "1.3.5"
@@ -1081,10 +1081,10 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
-fontmanager-redux@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/fontmanager-redux/-/fontmanager-redux-1.0.0.tgz"
-  integrity sha512-kXZel+PAWxS+bgFIlycUYWkmVpvN3SUodDeNaFNW7BloU5pqibBR395Ww+gLBnt51S9KnmHT2/+DzCMGbag0aw==
+fontmanager-redux@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/fontmanager-redux/-/fontmanager-redux-1.1.0.tgz#b1e97bc5c982df81749596fd48348f8318595bb3"
+  integrity sha512-cQtSfi7ZCW831XuGwoKIrO/cCBLhOvWK56adSr/Yl/fzB5omunW+XQmXlYHNKS7qWzOZe2Z6xQ8ZFt120Uj2lA==
   dependencies:
     node-addon-api "^3.0.2"
 
