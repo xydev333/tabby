@@ -135,7 +135,7 @@ export class SSHService {
             }
 
             ssh.connect({
-                host: session.connection.host.trim(),
+                host: session.connection.host,
                 port: session.connection.port ?? 22,
                 sock: session.proxyCommandStream ?? session.jumpStream,
                 username: session.connection.user,
