@@ -1,5 +1,4 @@
 import colors from 'ansi-colors'
-import { Spinner } from 'cli-spinner'
 import { Component, Injector, HostListener } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { first } from 'rxjs/operators'
@@ -26,13 +25,6 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
     private sessionStack: SSHSession[] = []
     private recentInputs = ''
     private reconnectOffered = false
-    private spinner = new Spinner({
-        text: 'Connecting',
-        stream: {
-            write: x => this.write(x),
-        },
-    })
-    private spinnerActive = false
 
     constructor (
         injector: Injector,
@@ -90,7 +82,7 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
                 throw new Error(`${session.profile.options.host}: jump host "${session.profile.options.jumpHost}" not found in your config`)
             }
 
-            const jumpSession = this.ssh.createSession(jumpConnection)
+            const jumpSession = new SSHSession(this.injector, jumpConnection)
 
             await this.setupOneSession(jumpSession)
 
@@ -120,13 +112,11 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
 
         this.write('\r\n' + colors.black.bgWhite(' SSH ') + ` Connecting to ${session.profile.options.host}\r\n`)
 
-        this.startSpinner()
+        this.startSpinner('Connecting')
 
         this.attachSessionHandler(session.serviceMessage$, msg => {
-            this.pauseSpinner(() => {
-                this.write(`\r${colors.black.bgWhite(' SSH ')} ${msg}\r\n`)
-                session.resize(this.size.columns, this.size.rows)
-            })
+            this.write(`\r${colors.black.bgWhite(' SSH ')} ${msg}\r\n`)
+            session.resize(this.size.columns, this.size.rows)
         })
 
         try {
@@ -173,7 +163,7 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
             return
         }
 
-        const session = this.ssh.createSession(this.profile)
+        const session = new SSHSession(this.injector, this.profile)
         this.setSession(session)
 
         try {
@@ -231,25 +221,5 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
     @HostListener('click')
     onClick (): void {
         this.sftpPanelVisible = false
-    }
-
-    private startSpinner () {
-        this.spinner.setSpinnerString(6)
-        this.spinner.start()
-        this.spinnerActive = true
-    }
-
-    private stopSpinner () {
-        this.spinner.stop(true)
-        this.spinnerActive = false
-    }
-
-    private pauseSpinner (work: () => void) {
-        const wasActive = this.spinnerActive
-        this.stopSpinner()
-        work()
-        if (wasActive) {
-            this.startSpinner()
-        }
     }
 }
