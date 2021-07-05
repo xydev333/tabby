@@ -2,7 +2,6 @@ import slugify from 'slugify'
 import deepClone from 'clone-deep'
 import { Injectable } from '@angular/core'
 import { ProfileProvider, NewTabParameters, SelectorService } from 'tabby-core'
-import { InputMode, NewlineMode } from 'tabby-terminal'
 import { SerialProfileSettingsComponent } from './components/serialProfileSettings.component'
 import { SerialTabComponent } from './components/serialTab.component'
 import { SerialService } from './services/serial.service'
@@ -35,10 +34,10 @@ export class SerialProfilesService extends ProfileProvider {
                     xany: false,
                     xoff: false,
                     xon: false,
-                    inputMode: 'local-echo' as InputMode,
+                    inputMode: null,
                     outputMode: null,
                     inputNewlines: null,
-                    outputNewlines: 'crlf' as NewlineMode,
+                    outputNewlines: null,
                 },
                 isBuiltin: true,
                 isTemplate: true,
@@ -51,8 +50,6 @@ export class SerialProfilesService extends ProfileProvider {
                 isBuiltin: true,
                 options: {
                     port: p.name,
-                    inputMode: 'local-echo' as InputMode,
-                    outputNewlines: 'crlf' as NewlineMode,
                 },
             })),
         ]

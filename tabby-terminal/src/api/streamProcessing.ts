@@ -87,9 +87,7 @@ export class TerminalStreamProcessor {
     }
 
     resize (): void {
-        if (this.options.inputMode?.startsWith('readline')) {
-            this.inputReadlineOutStream.emit('resize')
-        }
+        this.inputReadlineOutStream.emit('resize')
     }
 
     close (): void {

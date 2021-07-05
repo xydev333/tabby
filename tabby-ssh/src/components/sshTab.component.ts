@@ -90,7 +90,7 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
                 throw new Error(`${session.profile.options.host}: jump host "${session.profile.options.jumpHost}" not found in your config`)
             }
 
-            const jumpSession = new SSHSession(this.injector, jumpConnection)
+            const jumpSession = this.ssh.createSession(jumpConnection)
 
             await this.setupOneSession(jumpSession)
 
@@ -173,7 +173,7 @@ export class SSHTabComponent extends BaseTerminalTabComponent {
             return
         }
 
-        const session = new SSHSession(this.injector, this.profile)
+        const session = this.ssh.createSession(this.profile)
         this.setSession(session)
 
         try {
