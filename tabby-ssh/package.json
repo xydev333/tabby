@@ -1,6 +1,6 @@
 {
   "name": "tabby-ssh",
-  "version": "1.0.145",
+  "version": "1.0.145-nightly.0",
   "description": "SSH connections for Tabby",
   "keywords": [
     "tabby-builtin-plugin"
@@ -21,7 +21,7 @@
   "author": "Eugene Pankov",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "16.0.0",
+    "@types/node": "16.0.1",
     "@types/ssh2": "^0.5.46",
     "ansi-colors": "^4.1.1",
     "ssh2": "^1.1.0",
