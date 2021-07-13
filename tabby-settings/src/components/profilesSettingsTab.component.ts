@@ -190,7 +190,7 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
     }
 
     getDescription (profile: Profile): string|null {
-        return this.profilesService.getDescription(profile)
+        return this.profilesService.providerForProfile(profile)?.getDescription(profile) ?? null
     }
 
     getTypeLabel (profile: Profile): string {

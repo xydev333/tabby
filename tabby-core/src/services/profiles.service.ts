@@ -73,11 +73,6 @@ export class ProfilesService {
         return this.profileProviders.find(x => x.id === profile.type) ?? null
     }
 
-    getDescription (profile: Profile): string|null {
-        profile = this.getConfigProxyForProfile(profile)
-        return this.providerForProfile(profile)?.getDescription(profile) ?? null
-    }
-
     selectorOptionForProfile <T> (profile: Profile): SelectorOption<T> {
         profile = this.getConfigProxyForProfile(profile)
         return {
