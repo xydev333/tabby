@@ -1,3 +1,4 @@
+import deepClone from 'clone-deep'
 import deepEqual from 'deep-equal'
 import { v4 as uuidv4 } from 'uuid'
 import * as yaml from 'js-yaml'
@@ -20,7 +21,7 @@ function isStructuralMember (v) {
 }
 
 function isNonStructuralObjectMember (v): boolean {
-    return v instanceof Object && !(v instanceof Array) && v.__nonStructural
+    return v instanceof Object && (v instanceof Array || v.__nonStructural)
 }
 
 /** @hidden */
@@ -61,18 +62,18 @@ export class ConfigProxy {
             if (real[key] !== undefined) {
                 return real[key]
             } else {
+                if (isNonStructuralObjectMember(defaults[key])) {
+                    // The object might be modified outside
+                    real[key] = this.__getDefault(key)
+                    delete real[key].__nonStructural
+                    return real[key]
+                }
                 return this.__getDefault(key)
             }
         }
 
         this.__getDefault = (key: string) => { // eslint-disable-line @typescript-eslint/unbound-method
-            if (isNonStructuralObjectMember(defaults[key])) {
-                real[key] = { ...defaults[key] }
-                delete real[key].__nonStructural
-                return real[key]
-            } else {
-                return defaults[key]
-            }
+            return deepClone(defaults[key])
         }
 
         this.__setValue = (key: string, value: any) => { // eslint-disable-line @typescript-eslint/unbound-method
