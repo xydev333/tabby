@@ -24,7 +24,7 @@ export class POSIXShellsProvider extends ShellProvider {
             .filter(x => x && !x.startsWith('#'))
             .map(x => ({
                 id: slugify(x),
-                name: x.split('/').pop(),
+                name: x.split('/')[2],
                 icon: 'fas fa-terminal',
                 command: x,
                 args: ['-l'],
