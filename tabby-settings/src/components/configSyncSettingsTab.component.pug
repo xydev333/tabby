@@ -8,15 +8,11 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                 .header
                     .title Sync host
 
-                .input-group.w-50
-                    input.form-control(
-                        type='text',
-                        [(ngModel)]='config.store.configSync.host',
-                        (ngModelChange)='config.save()',
-                    )
-                    .input-group-append(*ngIf='config.store.configSync.host')
-                        button.btn.btn-secondary((click)='platform.openExternal("http://" + config.store.configSync.host)')
-                            i.fas.fa-external-link-alt
+                input.form-control(
+                    type='text',
+                    [(ngModel)]='config.store.configSync.host',
+                    (ngModelChange)='config.save()',
+                )
 
             .form-line
                 .header
@@ -53,24 +49,23 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                     .list-group-light
                         .list-group-item.d-flex.align-items-center(
                             *ngFor='let cfg of configs',
-                            [class.active]='isActiveConfig(cfg)',
+                            [class.active]='cfg.id === config.store.configSync.configID',
                         )
                             i.fas.fa-fw.fa-file
                             .ml-2.d-flex.flex-column.align-items-start
                                 div {{cfg.name}}
                                 small.text-muted Modified on {{cfg.modified_at|date:'medium'}}
-                                .badge.badge-info(*ngIf='isActiveConfig(cfg)') ACTIVE
+                                .badge.badge-info(*ngIf='cfg.id === config.store.configSync.configID') ACTIVE
                             .mr-auto
                             button.btn.btn-link.ml-1(
                                 (click)='uploadAndSync(cfg)',
-                                [class.hover-reveal]='!isActiveConfig(cfg)'
+                                [class.hover-reveal]='cfg.id !== config.store.configSync.configID'
                             )
                                 i.fas.fa-arrow-up
-                                span.ml-2(*ngIf='isActiveConfig(cfg)') Upload
-                                span.ml-2(*ngIf='!isActiveConfig(cfg)') Replace
+                                span.ml-2 Upload
                             button.btn.btn-link.ml-1(
                                 (click)='downloadAndSync(cfg)',
-                                [class.hover-reveal]='!isActiveConfig(cfg)'
+                                [class.hover-reveal]='cfg.id !== config.store.configSync.configID'
                             )
                                 i.fas.fa-arrow-down
                                 span.ml-2 Download
@@ -81,7 +76,7 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                             i.fas.fa-fw.fa-cloud-upload-alt
                             .ml-2 Upload as a new config
 
-            ng-container(*ngIf='hasMatchingRemoteConfig()')
+            ng-container(*ngIf='config.store.configSync.configID')
                 .form-line
                     .header
                         .title Sync automatically
