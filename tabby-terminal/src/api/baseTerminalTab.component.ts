@@ -445,7 +445,6 @@ export class BaseTerminalTabComponent extends BaseTabComponent implements OnInit
                         message: `Paste multiple lines?`,
                         buttons,
                         defaultId: 0,
-                        cancelId: 1,
                     }
                 )).response
                 if (result === 1) {

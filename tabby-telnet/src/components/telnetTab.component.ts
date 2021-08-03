@@ -119,10 +119,9 @@ export class TelnetTabComponent extends BaseTerminalTabComponent {
             {
                 type: 'warning',
                 message: `Disconnect from ${this.profile?.options.host}?`,
-                buttons: ['Disconnect', 'Do not close'],
-                defaultId: 0,
-                cancelId: 1,
+                buttons: ['Cancel', 'Disconnect'],
+                defaultId: 1,
             }
-        )).response === 0
+        )).response === 1
     }
 }

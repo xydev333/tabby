@@ -13,7 +13,6 @@ export interface MessageBoxOptions {
     detail?: string
     buttons: string[]
     defaultId?: number
-    cancelId?: number
 }
 
 export interface MessageBoxResult {

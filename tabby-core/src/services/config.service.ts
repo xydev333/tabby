@@ -375,7 +375,6 @@ export class ConfigService {
                         detail: e.toString(),
                         buttons: ['Erase config', 'Quit'],
                         defaultId: 1,
-                        cancelId: 1,
                     })
                     if (result.response === 1) {
                         this.platform.quit()

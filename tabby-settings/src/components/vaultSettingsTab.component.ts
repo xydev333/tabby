@@ -42,11 +42,10 @@ export class VaultSettingsTabComponent extends BaseComponent {
             {
                 type: 'warning',
                 message: 'Delete vault contents?',
-                buttons: ['Delete', 'Keep'],
+                buttons: ['Keep', 'Delete'],
                 defaultId: 1,
-                cancelId: 1,
             }
-        )).response === 0) {
+        )).response === 1) {
             await this.vault.setEnabled(false)
         }
     }
