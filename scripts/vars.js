@@ -17,6 +17,7 @@ exports.builtinPlugins = [
     'tabby-core',
     'tabby-settings',
     'tabby-terminal',
+    'tabby-electron',
     'tabby-local',
     'tabby-web',
     'tabby-community-color-schemes',
@@ -24,7 +25,6 @@ exports.builtinPlugins = [
     'tabby-ssh',
     'tabby-serial',
     'tabby-telnet',
-    'tabby-electron',
 ]
 
 exports.allPackages = [
