@@ -85,9 +85,9 @@ export class XTermFrontend extends Frontend {
         this.xterm.unicode.activeVersion = '11'
 
         const keyboardEventHandler = (name: string, event: KeyboardEvent) => {
-            this.hotkeysService.pushKeyEvent(name, event)
+            this.hotkeysService.pushKeystroke(name, event)
             let ret = true
-            if (this.hotkeysService.matchActiveHotkey(true) !== null) {
+            if (this.hotkeysService.getCurrentPartiallyMatchedHotkeys().length !== 0) {
                 event.stopPropagation()
                 event.preventDefault()
                 ret = false

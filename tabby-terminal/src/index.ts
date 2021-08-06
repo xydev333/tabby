@@ -100,13 +100,15 @@ export default class TerminalModule { // eslint-disable-line @typescript-eslint/
         events.forEach(event => {
             const oldHandler = hterm.hterm.Keyboard.prototype[event.htermHandler]
             hterm.hterm.Keyboard.prototype[event.htermHandler] = function (nativeEvent) {
-                hotkeys.pushKeyEvent(event.name, nativeEvent)
-                if (hotkeys.matchActiveHotkey(true) !== null) {
+                hotkeys.pushKeystroke(event.name, nativeEvent)
+                if (hotkeys.getCurrentPartiallyMatchedHotkeys().length === 0) {
                     oldHandler.bind(this)(nativeEvent)
                 } else {
                     nativeEvent.stopPropagation()
                     nativeEvent.preventDefault()
                 }
+                hotkeys.processKeystrokes()
+                hotkeys.emitKeyEvent(nativeEvent)
             }
         })
     }

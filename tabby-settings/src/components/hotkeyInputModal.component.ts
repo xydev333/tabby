@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
 import { trigger, transition, style, animate } from '@angular/animations'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
-import { HotkeysService, BaseComponent, Keystroke } from 'tabby-core'
+import { HotkeysService, BaseComponent } from 'tabby-core'
 
 const INPUT_TIMEOUT = 1000
 
@@ -36,7 +36,7 @@ const INPUT_TIMEOUT = 1000
     ],
 })
 export class HotkeyInputModalComponent extends BaseComponent {
-    @Input() value: Keystroke[] = []
+    @Input() value: string[] = []
     @Input() timeoutProgress = 0
 
     private lastKeyEvent: number|null = null
@@ -48,13 +48,11 @@ export class HotkeyInputModalComponent extends BaseComponent {
     ) {
         super()
         this.hotkeys.clearCurrentKeystrokes()
-        this.subscribeUntilDestroyed(hotkeys.keyEvent$, event => {
+        this.subscribeUntilDestroyed(hotkeys.key, (event) => {
+            this.lastKeyEvent = performance.now()
+            this.value = this.hotkeys.getCurrentKeySequence().map(x => x.value)
             event.preventDefault()
             event.stopPropagation()
-        })
-        this.subscribeUntilDestroyed(hotkeys.keystroke$, keystroke => {
-            this.lastKeyEvent = performance.now()
-            this.value.push(keystroke)
         })
     }
 
