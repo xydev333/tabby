@@ -1,7 +1,6 @@
 import { app, ipcMain, Menu, Tray, shell, screen, globalShortcut, MenuItemConstructorOptions } from 'electron'
 import * as promiseIpc from 'electron-promise-ipc'
 import * as remote from '@electron/remote/main'
-import { exec } from 'mz/child_process'
 import * as path from 'path'
 import * as fs from 'fs'
 import { Subject, throttleTime } from 'rxjs'
@@ -50,10 +49,6 @@ export class Application {
 
         ;(promiseIpc as any).on('plugin-manager:uninstall', (name) => {
             return pluginManager.uninstall(this.userPluginsPath, name)
-        })
-
-        ;(promiseIpc as any).on('get-default-mac-shell', async () => {
-            return (await exec(`/usr/bin/dscl . -read /Users/${process.env.LOGNAME} UserShell`))[0].toString().split(' ')[1].trim()
         })
 
         const configData = loadConfig()
