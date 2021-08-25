@@ -13,6 +13,7 @@ for (const key of [
     'querystring',
     'tls',
     'tty',
+    'url',
     'zlib',
     '../build/Release/cpufeatures.node',
     './crypto/build/Release/sshcrypto.node',

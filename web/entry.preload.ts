@@ -93,8 +93,6 @@ Object.assign(window, {
         paths: [],
     },
     Tabby,
-    __filename: '',
-    __dirname: '',
     process: {
         env: { },
         argv: ['tabby'],
