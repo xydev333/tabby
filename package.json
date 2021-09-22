@@ -16,7 +16,7 @@
     "@types/deep-equal": "1.0.1",
     "deep-equal": "2.0.5",
     "@types/electron-debug": "^2.1.0",
-    "@types/fs-extra": "^9.0.12",
+    "@types/fs-extra": "^9.0.13",
     "@types/js-yaml": "^4.0.2",
     "@types/node": "16.0.1",
     "@types/sortablejs": "^1.10.7",
