@@ -199,9 +199,9 @@ xterm-addon-unicode11@^0.3.0:
   integrity sha512-x5fHDZT2j9tlTlHnzPHt++9uKZ2kJ/lYQOj3L6xJA22xoJsS8UQRw/5YIFg2FUHqEAbV77Z1fZij/9NycMSH/A==
 
 xterm-addon-webgl@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.11.2.tgz#eeb01f85cb35b0e47d1a3b691d4c6de8b2584c8e"
-  integrity sha512-eEOKEIMZO0IRb+UTHhTaUwxpD1cu7Zqr+jdUfhDv9cfVieg9c4mcRn9RWvNGlprGdlLmOSTUByhm8ve6qAc4HQ==
+  version "0.11.4"
+  resolved "https://registry.yarnpkg.com/xterm-addon-webgl/-/xterm-addon-webgl-0.11.4.tgz#e22f3ec0cafca3d4adcabb89bb7c16efaaf3c8db"
+  integrity sha512-/a/VFeftc+etGXQYWaaks977j1P7/wickBXn15zDxZzXYYMT9RN17ztqyIDVLXg9krtg28+icKK6lvgIYghJ0w==
 
 "xterm@npm:@tabby-gang/xterm@4.14.0":
   version "4.14.0"
