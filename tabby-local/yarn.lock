@@ -71,9 +71,9 @@ tinyqueue@^2.0.3:
   resolved "https://registry.yarnpkg.com/tinyqueue/-/tinyqueue-2.0.3.tgz#64d8492ebf39e7801d7bd34062e29b45b2035f08"
   integrity sha512-ppJZNDuKGgxzkHihX8v9v9G5f+18gzaTfrukGrq6ueg0lmH4nqVnA2IPG0AEH3jKEk2GRJCUhDoqpoiw3PHLBA==
 
-utils-decorators@^1.8.3:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/utils-decorators/-/utils-decorators-1.10.0.tgz#eb9208ccbb7fbb7488d5d04b2611df62c2fcaf4d"
-  integrity sha512-wlNRoPCFdxSReLfmhNqkZsg8FqsKu9d5trdSELxBZCtmK4KPtSidxRg24+bpZQjEBBF0hUIQEFz2uM7sBDVG2Q==
+utils-decorators@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/utils-decorators/-/utils-decorators-2.0.2.tgz#3c70e0898e05e39144767304584cdcd4588e0004"
+  integrity sha512-TQUA9pRPGyg4bpsqeGmwe1X8BIhe2t+GEACrcgXn3OJMOdvb1pK/ry2DZJgLoYezpkcduB8h8ULmNfYtdk3MoA==
   dependencies:
     tinyqueue "^2.0.3"
