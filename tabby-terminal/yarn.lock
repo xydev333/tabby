@@ -58,10 +58,10 @@ font-finder@^1.0.3, font-finder@^1.1.0:
     get-system-fonts "^2.0.0"
     promise-stream-reader "^1.0.1"
 
-font-ligatures@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/font-ligatures/-/font-ligatures-1.4.0.tgz#6a7b370d96be1358dddfad67830e82fbfd59e6dc"
-  integrity sha512-n7DFnnEpJ0NrVoLqZIL4tMGVs+CnFwQc92m80LWyrbgAFO4x234+t2/H9o4eOYA1eh6ta9dZAEEsJAwsBdNezA==
+font-ligatures@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/font-ligatures/-/font-ligatures-1.4.1.tgz#e8c9df7cf6bee80c0cca4a9a578618c7b1f5d8de"
+  integrity sha512-7W6zlfyhvCqShZ5ReUWqmSd9vBaUudW0Hxis+tqUjtHhsPU+L3Grf8mcZAtCiXHTzorhwdRTId2WeH/88gdFkw==
   dependencies:
     font-finder "^1.0.3"
     lru-cache "^6.0.0"
@@ -176,12 +176,12 @@ xterm-addon-fit@^0.5.0:
   integrity sha512-DsS9fqhXHacEmsPxBJZvfj2la30Iz9xk+UKjhQgnYNkrUIN5CYLbw7WEfz117c7+S86S/tpHPfvNxJsF5/G8wQ==
 
 xterm-addon-ligatures@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/xterm-addon-ligatures/-/xterm-addon-ligatures-0.5.1.tgz#40ff69c43b6406aaf130fdfe9a43ca4eac49f892"
-  integrity sha512-L70vyVAapDvBBti1bqFTUQOd6R6LH5qKzqZ76sERKkf75+u++sylqflCdwT8zmorK6zxcc3vq4+I4GDYawgYrQ==
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/xterm-addon-ligatures/-/xterm-addon-ligatures-0.5.3.tgz#8cbdbf5d51e6388fb8a9f2c711e0f133d1bda19c"
+  integrity sha512-sNKPuQx8sRNh97PwqL9K+QoftIyaj/t2teiBd2D+RN2kHvPsZkxjIV/XM0/odPEQUhHxCfP30RmZo+PwQBStpQ==
   dependencies:
     font-finder "^1.1.0"
-    font-ligatures "^1.4.0"
+    font-ligatures "^1.4.1"
 
 xterm-addon-search@^0.8.1:
   version "0.8.1"
